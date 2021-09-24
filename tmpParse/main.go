@@ -8,11 +8,13 @@ import (
 var tpl *template.Template
 
 func main() {
+
 	tpl, _ = template.ParseGlob("templates/*.html")
 	http.HandleFunc("/", indexHandler)
 	http.HandleFunc("/about", aboutHandler)
 	http.HandleFunc("/contact", contactHandler)
 	http.HandleFunc("/login", loginHandler)
+	http.HandleFunc("/register", registerHandler)
 	http.ListenAndServe(":8080", nil)
 }
 func indexHandler(w http.ResponseWriter, r *http.Request) {
@@ -26,4 +28,7 @@ func contactHandler(w http.ResponseWriter, r *http.Request) {
 }
 func loginHandler(w http.ResponseWriter, r *http.Request) {
 	tpl.ExecuteTemplate(w, "login.html", nil)
+}
+func registerHandler(w http.ResponseWriter, r *http.Request) {
+	tpl.ExecuteTemplate(w, "register.html", nil)
 }
