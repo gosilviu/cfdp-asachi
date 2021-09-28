@@ -1,15 +1,22 @@
 package main
 
 import (
+	"database/sql"
 	"net/http"
 	"text/template"
+
+	_ "github.com/go-sql-driver/mysql"
 )
 
 var tpl *template.Template
+var db *sql.DB
 
 func main() {
 
 	tpl, _ = template.ParseGlob("templates/*.html")
+	var err error
+	db, err = sql.Open("mysql", "root:password@tcp(localhost:3306)/mygodatabase")
+
 	http.HandleFunc("/", indexHandler)
 	http.HandleFunc("/about", aboutHandler)
 	http.HandleFunc("/contact", contactHandler)
