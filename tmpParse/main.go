@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"net/http"
+	"os"
 	"text/template"
 	"unicode"
 
@@ -118,6 +119,10 @@ func registerAuthHandler(w http.ResponseWriter, r *http.Request) {
 	var result sql.Result
 
 	result, err = insertStmt.Exec(username, hash)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
 	rowsAff, _ := result.RowsAffected()
 	fmt.Println("--------------------")
 	lastIns, _ := result.LastInsertId()
