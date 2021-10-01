@@ -1,1 +1,17 @@
-<b>about</b>
+{{template "Header"}}
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>About Page</h2><br>
+
+<p>there isn't much to say about this very basic site</p>
+
+<br><br>
+{{if .}}
+    <h4>Hello {{.}}. You re logged in</h4>
+{{end}}
+
+</body>
+</html>
+{{template "Footer"}}

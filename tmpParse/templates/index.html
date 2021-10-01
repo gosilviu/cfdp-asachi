@@ -1,3 +1,15 @@
 {{template "Header"}}
-<b>Index page</b>
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Home Page</h2><br>
+<a href="/about">About</a><a href="/logout">Logout</a>
+<br><br> 
+{{if .}}
+    <h4>Hello {{.}}. You re logged in</h4>
+{{end}}
+
+</body>
+</html>
 {{template "Footer"}}

@@ -11,10 +11,12 @@ import (
 	"golang.org/x/crypto/bcrypt"
 
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/gorilla/sessions"
 )
 
 var tpl *template.Template
 var db *sql.DB
+var store = sessions.NewCookieStore([]byte("super-secret"))
 
 func main() {
 
@@ -27,24 +29,52 @@ func main() {
 	defer db.Close()
 
 	http.HandleFunc("/", indexHandler)
+	http.HandleFunc("/logout", logoutHandler)
 	http.HandleFunc("/about", aboutHandler)
 	http.HandleFunc("/contact", contactHandler)
-	http.HandleFunc("/login", loginHandler)
 	http.HandleFunc("/register", registerHandler)
 	http.HandleFunc("/registerauth", registerAuthHandler)
+	http.HandleFunc("/login", loginHandler)
+	http.HandleFunc("/loginauth", loginAuthHandler)
 	http.ListenAndServe(":8080", nil)
 }
+func loginHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("*****loginHandler running*****")
+	tpl.ExecuteTemplate(w, "login.html", nil)
+}
+func logoutHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("*****logoutHandler running*****")
+	session, _ := store.Get(r, "session")
+	// The delete built-in function deletes the element with the specified key (m[key]) from the map.
+	// If m is nil or there is no such element, delete is a no-op.
+	delete(session.Values, "userID")
+	session.Save(r, w)
+	tpl.ExecuteTemplate(w, "login.html", "Logged Out")
+}
 func indexHandler(w http.ResponseWriter, r *http.Request) {
-	tpl.ExecuteTemplate(w, "index.html", nil)
+	fmt.Println("*****indexHandler running*****")
+	session, _ := store.Get(r, "session")
+	_, ok := session.Values["userID"]
+	fmt.Println("ok:", ok)
+	if !ok {
+		http.Redirect(w, r, "/login", http.StatusFound) // http.StatusFound is 302
+		return
+	}
+	tpl.ExecuteTemplate(w, "index.html", session.Values["user"])
 }
 func aboutHandler(w http.ResponseWriter, r *http.Request) {
-	tpl.ExecuteTemplate(w, "about.html", nil)
+	fmt.Println("*****aboutHandler running*****")
+	session, _ := store.Get(r, "session")
+	_, ok := session.Values["userID"]
+	fmt.Println("ok:", ok)
+	if !ok {
+		http.Redirect(w, r, "/login", http.StatusFound) // http.StatusFound is 302
+		return
+	}
+	tpl.ExecuteTemplate(w, "about.html", session.Values["user"])
 }
 func contactHandler(w http.ResponseWriter, r *http.Request) {
 	tpl.ExecuteTemplate(w, "contact.html", nil)
-}
-func loginHandler(w http.ResponseWriter, r *http.Request) {
-	tpl.ExecuteTemplate(w, "login.html", nil)
 }
 func registerHandler(w http.ResponseWriter, r *http.Request) {
 	tpl.ExecuteTemplate(w, "register.html", nil)
@@ -136,4 +166,32 @@ func registerAuthHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	fmt.Fprint(w, "congrats, your account has been successfully created")
+}
+func loginAuthHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("*****loginAuthHandler running*****")
+	r.ParseForm()
+	username := r.FormValue("username")
+	password := r.FormValue("password")
+	fmt.Println("username:", username, "password: ", password)
+	var userID, hash string
+	stmt := "SELECT id, pass FROM register WHERE user = ?"
+	row := db.QueryRow(stmt, username)
+	err := row.Scan(&userID, &hash)
+	fmt.Println("hash from db: ", hash)
+	if err != nil {
+		fmt.Println("error selecting hash in db by Username")
+		tpl.ExecuteTemplate(w, "login.html", "check username and password")
+		return
+	}
+	err = bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
+	if err == nil {
+		session, _ := store.Get(r, "session")
+		session.Values["userID"] = userID
+		session.Values["user"] = username
+		session.Save(r, w)
+		tpl.ExecuteTemplate(w, "index.html", "Logged In")
+		return
+	}
+	fmt.Println("incorrect password")
+	tpl.ExecuteTemplate(w, "login.html", "check username and password")
 }

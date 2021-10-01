@@ -1,0 +1,24 @@
+{{template "Header"}}
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Login</h2><br>
+
+<form action="/loginauth" method="POST">
+    <label for="username">Name:</label><br>
+    <input type="text" id="username" name="username"><br>
+    <label for="password">Password:</label><br>
+    <input type="password" id="password" name="password"><br><br>
+    <input type="submit" value="Submit">
+</form>
+<a href="/register">Register</a>
+
+<br><br>
+{{if .}}
+    {{.}}
+{{end}}
+
+</body>
+</html>
+{{template "Footer"}}
