@@ -1,0 +1,83 @@
+{{template "Header"}}
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Fisa stare tehnica</h2><br>
+
+<form action="/addbridgehandler" method="POST">
+    <label for="id">Id-ul podului:</label>
+    <input type="text" id="id" name="id"><br>
+
+    <label for="tip_lucrare">Tipul lucrarii de arta:</label>
+    <input type="text" id="tip_lucrare" name="tip_lucrare"><br>
+
+    <label for="obstacol_traversat">Obstacol traversat</label>
+    <input type="text" id="obstacol_traversat" name="obstacol_traversat"><br>
+
+    <label for="localitate">Localitatea cea mai apropiata:</label>
+    <input type="text" id="localitate" name="localitate"><br>
+
+    <label for="categoria_drum">Categoria, numarul drumului pe care este amplasat:</label>
+    <input type="text" id="categoria_drum" name="categoria_drum"><br>
+
+    <label for="poz_km">*Pozitia kilometrica:</label>
+    <input type="text" id="poz_km" name="poz_km"><br>
+
+    <label for="an_consolidat">Anul constructiei, anii consolidarilor sau reabilitarilor:</label>
+    <input type="text" id="an_consolidat" name="an_consolidat"><br>
+
+    <label for="tip_pod">Tipul podului dupa schema statica de rezistenta, oblicitate:</label>
+    <input type="text" id="tip_pod" name="tip_pod"><br>
+
+    <label for="material">Materialul din care este alcatuit:</label>
+    <input type="text" id="material" name="material"><br>
+    
+    <label for="lungime">Lungimea totala a podului, numarul de deschideri si lungimea lor:</label>
+    <input type="text" id="lungime" name="lungime"><br>
+
+    <label for="latime">Latimea podului(parte carosabila+trotuare) numarul de grinzi in sectiunea transversala:</label>
+    <input type="text" id="latime" name="latime"><br>
+
+    <label for="reazem">Aparate de reazem(tip, materialul din care sunt construite, scheme de amplasare):</label>
+    <input type="text" id="reazem" name="reazem"><br>
+
+    <label for="infra">Tip infrastructuri:</label>
+    <input type="text" id="infra" name="infra"><br>
+
+    <label for="fundatii">Tip fundatii:</label>
+    <input type="text" id="fundatii" name="fundatii"><br>
+
+    <label for="imbracaminte">Tipul imbracamintii pe pod:</label>
+    <input type="text" id="imbracaminte" name="imbracaminte"><br>
+
+    <label for="rosturi">Rosturi tip:</label>
+    <input type="text" id="rosturi" name="rosturi"><br>
+
+    <label for="pozitie">Pozitie:</label>
+    <input type="text" id="pozitie" name="pozitie"><br>
+
+    <label for="parapeti_pietonali">Parapeti pietonali:</label>
+    <input type="text" id="parapeti_pietonali" name="parapeti_pietonali"><br>
+
+    <label for="parapeti_siguranta">Parapeti siguranta:</label>
+    <input type="text" id="parapeti_siguranta" name="parapeti_siguranta"><br>
+
+    <label for="racordari">Racordari cu terasamanetele:</label>
+    <input type="text" id="racordari" name="racordari"><br>
+
+    <label for="aparari">Aparari de mal:</label>
+    <input type="text" id="aparari" name="aparari"><br>
+    
+    <input type="submit" value="Submit">
+</form> <br>
+<a href="/addbridge">Add a Bridge</a> <a href="/about">About</a> <a href="/logout">Logout</a> <a href="/">Index</a>
+
+<br><br>
+{{if .}}
+    <h4>Hello {{.}}. You re logged in</h4>
+{{end}}
+
+</body>
+</html>
+{{template "Footer"}}

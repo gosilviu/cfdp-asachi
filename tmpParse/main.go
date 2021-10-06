@@ -36,7 +36,44 @@ func main() {
 	http.HandleFunc("/registerauth", registerAuthHandler)
 	http.HandleFunc("/login", loginHandler)
 	http.HandleFunc("/loginauth", loginAuthHandler)
+	http.HandleFunc("/addbridge", addBridge)
+	http.HandleFunc("/fisa_stare_tehnica", fisaStareTehnica)
+	http.HandleFunc("/defecte", defecte)
+	//http.HandleFunc("/addbridgehandler", addBridgeHandler)
 	http.ListenAndServe(":8080", nil)
+}
+func defecte(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("*****defecte running*****")
+	session, _ := store.Get(r, "session")
+	_, ok := session.Values["userID"]
+	fmt.Println("ok:", ok)
+	if !ok {
+		http.Redirect(w, r, "/login", http.StatusFound) // http.StatusFound is 302
+		return
+	}
+	tpl.ExecuteTemplate(w, "defecte.html", session.Values["user"])
+}
+func fisaStareTehnica(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("*****fisa stare tehnica running*****")
+	session, _ := store.Get(r, "session")
+	_, ok := session.Values["userID"]
+	fmt.Println("ok:", ok)
+	if !ok {
+		http.Redirect(w, r, "/login", http.StatusFound) // http.StatusFound is 302
+		return
+	}
+	tpl.ExecuteTemplate(w, "fisa_stare_tehnica.html", session.Values["user"])
+}
+func addBridge(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("*****add bridge running*****")
+	session, _ := store.Get(r, "session")
+	_, ok := session.Values["userID"]
+	fmt.Println("ok:", ok)
+	if !ok {
+		http.Redirect(w, r, "/login", http.StatusFound) // http.StatusFound is 302
+		return
+	}
+	tpl.ExecuteTemplate(w, "addbridge.html", session.Values["user"])
 }
 func loginHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("*****loginHandler running*****")
