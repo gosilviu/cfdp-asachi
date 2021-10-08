@@ -16,7 +16,7 @@
       text-align:center;vertical-align:top}
     .tg .tg-abip{background-color:#f9f9f9;border-color:inherit;text-align:center;vertical-align:top}
     </style>
-    <form action="/addbridgehandler" method="POST"></form>
+    <form action="/addbridgehandler" method="POST">
     <table class="tg">
     <thead>
       <tr>
@@ -871,7 +871,11 @@
         <td class="tg-abip"></td>
         <td class="tg-abip"></td>
         <td class="tg-abip"></td>
-        <td class="tg-abip"></td>
+        <td class="tg-abip"><select name = "42c5">
+            <option value = "2">2</option>
+            <option value = "3">3</option>
+            
+         </select></td>
         <td class="tg-abip"></td>
       </tr>
       <tr>
@@ -932,7 +936,11 @@
         <td class="tg-c3ow">Pentru suprafete:
             < 5 m2   5 – 6
             > 5 m2     7</td>
-        <td class="tg-c3ow"></td>
+        <td class="tg-c3ow"><select name = "45c1">
+            <option value = "6">6</option>
+            <option value = "7">7</option>
+            <option value = "5">5</option>
+         </select></td>
         <td class="tg-c3ow"></td>
         <td class="tg-c3ow"></td>
         <td class="tg-c3ow"></td>
@@ -2125,15 +2133,20 @@
         <td class="tg-abip"></td>
         <td class="tg-abip"></td>
         <td class="tg-abip"></td>
-        <td class="tg-abip"></td>
+        <td class="tg-abip"><select name = "97c5">
+            <option value = "3">3</option>
+            <option value = "4">4</option>
+            <option value = "5">5</option>
+         </select></td>
         <td class="tg-abip"></td>
       </tr>
     </tbody>
     </table>
+    <input type="submit" value="Submit">
 </form>
 
 <br>
-<a href="/addbridge">Add a Bridge</a> <a href="/about">About</a> <a href="/logout">Logout</a> <a href="/">Index</a>
+<a href="/addbridge">Add a Bridge</a> <a href="/about">About</a> <a href="/logout">Logout</a> <a href="/">Index</a> <a href="/contact">Contact</a> 
 
 <br><br>
 {{if .}}

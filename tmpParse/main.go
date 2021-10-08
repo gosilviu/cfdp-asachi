@@ -111,7 +111,15 @@ func aboutHandler(w http.ResponseWriter, r *http.Request) {
 	tpl.ExecuteTemplate(w, "about.html", session.Values["user"])
 }
 func contactHandler(w http.ResponseWriter, r *http.Request) {
-	tpl.ExecuteTemplate(w, "contact.html", nil)
+	fmt.Println("*****contactHandler running*****")
+	session, _ := store.Get(r, "session")
+	_, ok := session.Values["userID"]
+	fmt.Println("ok:", ok)
+	if !ok {
+		http.Redirect(w, r, "/login", http.StatusFound) // http.StatusFound is 302
+		return
+	}
+	tpl.ExecuteTemplate(w, "contact.html", session.Values["user"])
 }
 func registerHandler(w http.ResponseWriter, r *http.Request) {
 	tpl.ExecuteTemplate(w, "register.html", nil)
