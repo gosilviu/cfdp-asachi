@@ -239,9 +239,12 @@ func addBridgeHandler(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/login", http.StatusFound) // http.StatusFound is 302
 		return
 	}
+	if r.Method == "GET" {
+		tpl.ExecuteTemplate(w, "fisa_stare_tehnica.html", nil)
+		return
+	}
 
 	r.ParseForm()
-	id := r.FormValue("id")
 	tip_lucrare := r.FormValue("tip_lucrare")
 	obstacol_traversat := r.FormValue("obstacol_traversat")
 	localitate := r.FormValue("localitate")
@@ -604,6 +607,5 @@ func addBridgeHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	fmt.Fprint(w, "congrats, your bridge has been successfully created")
-	http.Redirect(w, r, "/login", http.StatusFound)
 
 }
