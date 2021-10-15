@@ -206,7 +206,44 @@ func main() {
 	http.HandleFunc("/fisa_stare_tehnica", fisaStareTehnica)
 	http.HandleFunc("/addbridgehandler", addBridgeHandler)
 	http.HandleFunc("/browse", browseHandler)
+	http.HandleFunc("/delete/", deleteHandler)
 	http.ListenAndServe(":8081", nil)
+}
+
+func deleteHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("*****deleteHandler running*****")
+	session, _ := store.Get(r, "session")
+	_, ok := session.Values["userID"]
+	fmt.Println("ok:", ok)
+	if !ok {
+		http.Redirect(w, r, "/login", http.StatusFound) // http.StatusFound is 302
+		return
+	}
+	r.ParseForm()
+	id := r.FormValue("idproducts")
+	//  func (db *DB) Prepare(query string) (*Stmt, error)
+	del, err := db.Prepare("DELETE FROM `mygodatabase`.`bridges` WHERE (`id` = ?);")
+	if err != nil {
+		panic(err)
+	}
+	defer del.Close()
+	var res sql.Result
+	res, err = del.Exec(id)
+	rowsAff, _ := res.RowsAffected()
+	fmt.Println("rowsAff:", rowsAff)
+
+	if err != nil || rowsAff != 1 {
+		fmt.Fprint(w, "Error deleting product")
+		return
+	}
+	/*
+		if err != nil {
+			fmt.Fprint(w, "Error deleting product")
+			return
+		}
+	*/
+	fmt.Println("err:", err)
+	tpl.ExecuteTemplate(w, "result.html", "Product was Successfully Deleted")
 }
 
 func browseHandler(w http.ResponseWriter, r *http.Request) {
