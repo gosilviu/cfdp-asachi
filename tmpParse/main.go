@@ -18,6 +18,172 @@ var tpl *template.Template
 var db *sql.DB
 var store = sessions.NewCookieStore([]byte("super-secret"))
 
+type Product struct {
+	ID                 int
+	user               string
+	tip_lucrare        string
+	obstacol_traversat string
+	localitate         string
+	categoria_drum     string
+	poz_km             string
+	an_consolidat      string
+	tip_pod            string
+	material           string
+	lungime            string
+	latime             string
+	reazem             string
+	infra              string
+	fundatii           string
+	imbracaminte       string
+	rosturi            string
+	pozitie            string
+	parapeti_pietonali string
+	parapeti_siguranta string
+	racordari          string
+	aparari            string
+	_1c1               string
+	_1c2               string
+	_2c4               string
+	_3c5               string
+	_4c3               string
+	_5c3               string
+	_6c1               string
+	_6c2               string
+	_6c3               string
+	_7c1               string
+	_7c2               string
+	_7c3               string
+	_8c1               string
+	_8c2               string
+	_8c3               string
+	_9c1               string
+	_9c2               string
+	_9c3               string
+	_10c1              string
+	_11c5              string
+	_12c1              string
+	_12c2              string
+	_12c3              string
+	_13c5              string
+	_14c1              string
+	_14c2              string
+	_14c3              string
+	_15c1              string
+	_15c2              string
+	_16c1              string
+	_16c2              string
+	_16c3              string
+	_17c1              string
+	_17c2              string
+	_17c3              string
+	_18c1              string
+	_18c2              string
+	_19c1              string
+	_20c5              string
+	_21c5              string
+	_22c4              string
+	_23c4              string
+	_24c5              string
+	_25c3              string
+	_26c2              string
+	_27c1              string
+	_28c1              string
+	_29c3              string
+	_30c3              string
+	_31c2              string
+	_33c3              string
+	_34c1              string
+	_34c2              string
+	_35c1              string
+	_35c2              string
+	_35c3              string
+	_36c1              string
+	_36c2              string
+	_36c3              string
+	_37c1              string
+	_37c2              string
+	_37c3              string
+	_38c5              string
+	_39c1              string
+	_40c1              string
+	_40c2              string
+	_41c1              string
+	_41c2              string
+	_42c5              string
+	_43c3              string
+	_44c1              string
+	_44c2              string
+	_44c3              string
+	_45c1              string
+	_46c5              string
+	_47c4              string
+	_48c5              string
+	_49c1              string
+	_49c2              string
+	_50c5              string
+	_51c5              string
+	_52c3              string
+	_53c4              string
+	_54c1              string
+	_54c3              string
+	_55c4              string
+	_56c1              string
+	_57c1              string
+	_57c2              string
+	_58c3              string
+	_59c3              string
+	_60c1              string
+	_60c2              string
+	_61c5              string
+	_62c1              string
+	_62c2              string
+	_63c5              string
+	_64c1              string
+	_64c3              string
+	_65c5              string
+	_66c5              string
+	_67c1              string
+	_67c2              string
+	_67c3              string
+	_68c1              string
+	_68c2              string
+	_68c3              string
+	_69c4              string
+	_70c1              string
+	_70c2              string
+	_71c1              string
+	_71c3              string
+	_72c1              string
+	_72c3              string
+	_73c3              string
+	_74c1              string
+	_74c2              string
+	_74c3              string
+	_75c1              string
+	_76c1              string
+	_77c1              string
+	_78c1              string
+	_79c1              string
+	_80c1              string
+	_81c2              string
+	_82c2              string
+	_83c2              string
+	_84c3              string
+	_85c3              string
+	_86c3              string
+	_87c3              string
+	_88c3              string
+	_89c3              string
+	_90c3              string
+	_91c5              string
+	_92c5              string
+	_93c5              string
+	_94c5              string
+	_95c5              string
+	_96c5              string
+	_97c5              string
+}
+
 func main() {
 
 	tpl, _ = template.ParseGlob("templates/*.html")
@@ -39,7 +205,199 @@ func main() {
 	http.HandleFunc("/addbridge", addBridge)
 	http.HandleFunc("/fisa_stare_tehnica", fisaStareTehnica)
 	http.HandleFunc("/addbridgehandler", addBridgeHandler)
+	http.HandleFunc("/browse", browseHandler)
 	http.ListenAndServe(":8080", nil)
+}
+
+func browseHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("*****browseHandler running*****")
+	session, _ := store.Get(r, "session")
+	_, ok := session.Values["userID"]
+	fmt.Println("ok:", ok)
+	if !ok {
+		http.Redirect(w, r, "/login", http.StatusFound) // http.StatusFound is 302
+		return
+	}
+	stmt := "SELECT * FROM bridges"
+	rows, err := db.Query(stmt)
+	if err != nil {
+		panic(err)
+	}
+	defer rows.Close()
+	var products []Product
+	for rows.Next() {
+		var p Product
+		err = rows.Scan(&p.ID,
+			&p.user,
+			&p.tip_lucrare,
+			&p.obstacol_traversat,
+			&p.localitate,
+			&p.categoria_drum,
+			&p.poz_km,
+			&p.an_consolidat,
+			&p.tip_pod,
+			&p.material,
+			&p.lungime,
+			&p.latime,
+			&p.reazem,
+			&p.infra,
+			&p.fundatii,
+			&p.imbracaminte,
+			&p.rosturi,
+			&p.pozitie,
+			&p.parapeti_pietonali,
+			&p.parapeti_siguranta,
+			&p.racordari,
+			&p.aparari,
+			&p._1c1,
+			&p._1c2,
+			&p._2c4,
+			&p._3c5,
+			&p._4c3,
+			&p._5c3,
+			&p._6c1,
+			&p._6c2,
+			&p._6c3,
+			&p._7c1,
+			&p._7c2,
+			&p._7c3,
+			&p._8c1,
+			&p._8c2,
+			&p._8c3,
+			&p._9c1,
+			&p._9c2,
+			&p._9c3,
+			&p._10c1,
+			&p._11c5,
+			&p._12c1,
+			&p._12c2,
+			&p._12c3,
+			&p._13c5,
+			&p._14c1,
+			&p._14c2,
+			&p._14c3,
+			&p._15c1,
+			&p._15c2,
+			&p._16c1,
+			&p._16c2,
+			&p._16c3,
+			&p._17c1,
+			&p._17c2,
+			&p._17c3,
+			&p._18c1,
+			&p._18c2,
+			&p._19c1,
+			&p._20c5,
+			&p._21c5,
+			&p._22c4,
+			&p._23c4,
+			&p._24c5,
+			&p._25c3,
+			&p._26c2,
+			&p._27c1,
+			&p._28c1,
+			&p._29c3,
+			&p._30c3,
+			&p._31c2,
+			&p._33c3,
+			&p._34c1,
+			&p._34c2,
+			&p._35c1,
+			&p._35c2,
+			&p._35c3,
+			&p._36c1,
+			&p._36c2,
+			&p._36c3,
+			&p._37c1,
+			&p._37c2,
+			&p._37c3,
+			&p._38c5,
+			&p._39c1,
+			&p._40c1,
+			&p._40c2,
+			&p._41c1,
+			&p._41c2,
+			&p._42c5,
+			&p._43c3,
+			&p._44c1,
+			&p._44c2,
+			&p._44c3,
+			&p._45c1,
+			&p._46c5,
+			&p._47c4,
+			&p._48c5,
+			&p._49c1,
+			&p._49c2,
+			&p._50c5,
+			&p._51c5,
+			&p._52c3,
+			&p._53c4,
+			&p._54c1,
+			&p._54c3,
+			&p._55c4,
+			&p._56c1,
+			&p._57c1,
+			&p._57c2,
+			&p._58c3,
+			&p._59c3,
+			&p._60c1,
+			&p._60c2,
+			&p._61c5,
+			&p._62c1,
+			&p._62c2,
+			&p._63c5,
+			&p._64c1,
+			&p._64c3,
+			&p._65c5,
+			&p._66c5,
+			&p._67c1,
+			&p._67c2,
+			&p._67c3,
+			&p._68c1,
+			&p._68c2,
+			&p._68c3,
+			&p._69c4,
+			&p._70c1,
+			&p._70c2,
+			&p._71c1,
+			&p._71c3,
+			&p._72c1,
+			&p._72c3,
+			&p._73c3,
+			&p._74c1,
+			&p._74c2,
+			&p._74c3,
+			&p._75c1,
+			&p._76c1,
+			&p._77c1,
+			&p._78c1,
+			&p._79c1,
+			&p._80c1,
+			&p._81c2,
+			&p._82c2,
+			&p._83c2,
+			&p._84c3,
+			&p._85c3,
+			&p._86c3,
+			&p._87c3,
+			&p._88c3,
+			&p._89c3,
+			&p._90c3,
+			&p._91c5,
+			&p._92c5,
+			&p._93c5,
+			&p._94c5,
+			&p._95c5,
+			&p._96c5,
+			&p._97c5)
+
+		if err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+		}
+		products = append(products, p)
+	}
+	tpl.ExecuteTemplate(w, "select.html", products)
 }
 
 func fisaStareTehnica(w http.ResponseWriter, r *http.Request) {
@@ -240,7 +598,7 @@ func addBridgeHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if r.Method == "GET" {
-		tpl.ExecuteTemplate(w, "fisa_stare_tehnica.html", nil)
+		tpl.ExecuteTemplate(w, "fisa_stare_tehnica.html", session.Values["user"])
 		return
 	}
 
