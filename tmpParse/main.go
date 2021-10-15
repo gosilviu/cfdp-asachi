@@ -20,10 +20,10 @@ var store = sessions.NewCookieStore([]byte("super-secret"))
 
 type Product struct {
 	ID                 int
-	user               string
-	tip_lucrare        string
-	obstacol_traversat string
-	localitate         string
+	User               string
+	Tip_lucrare        string
+	Obstacol_traversat string
+	Localitate         string
 	categoria_drum     string
 	poz_km             string
 	an_consolidat      string
@@ -206,7 +206,7 @@ func main() {
 	http.HandleFunc("/fisa_stare_tehnica", fisaStareTehnica)
 	http.HandleFunc("/addbridgehandler", addBridgeHandler)
 	http.HandleFunc("/browse", browseHandler)
-	http.ListenAndServe(":8080", nil)
+	http.ListenAndServe(":8081", nil)
 }
 
 func browseHandler(w http.ResponseWriter, r *http.Request) {
@@ -228,10 +228,10 @@ func browseHandler(w http.ResponseWriter, r *http.Request) {
 	for rows.Next() {
 		var p Product
 		err = rows.Scan(&p.ID,
-			&p.user,
-			&p.tip_lucrare,
-			&p.obstacol_traversat,
-			&p.localitate,
+			&p.User,
+			&p.Tip_lucrare,
+			&p.Obstacol_traversat,
+			&p.Localitate,
 			&p.categoria_drum,
 			&p.poz_km,
 			&p.an_consolidat,
