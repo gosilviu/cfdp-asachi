@@ -2,17 +2,18 @@
 <!DOCTYPE html>
 <html>
 <body>
+    <center>
 
 <h2>Contact Page</h2><br>
 
 <p>Contact me motherfuckers</p>
-<a href="/addbridge">Add a Bridge</a> <a href="/logout">Logout</a> <a href="/">Index</a>
+<a href="/about">About</a> <a href="/logout">Logout</a> <a href="/addbridge">Add Bridge</a> <a href="/contact">Contact</a> <a href="/browse">Your Bridges</a> <br><br>
 
 <br><br>
 {{if .}}
     <h4>Hello {{.}}. You re logged in</h4>
 {{end}}
-
+</center>
 </body>
 </html>
 {{template "Footer"}}

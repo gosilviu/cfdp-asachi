@@ -1,7 +1,7 @@
 {{template "Header"}}
 <!DOCTYPE html>
 <html>
-<body>
+<body><center>
 
 <h2>Fisa stare tehnica</h2><br>
 
@@ -82,10 +82,17 @@
     .tg .tg-k0up{border-color:inherit;font-family:"Palatino Linotype", "Book Antiqua", Palatino, serif !important;;font-size:18px;
       text-align:center;vertical-align:top}
     .tg .tg-abip{background-color:#f9f9f9;border-color:inherit;text-align:center;vertical-align:top}
+    #sticky-div {
+position : sticky;
+top :0;
+
+
+}
     </style>
     
     <table class="tg">
     <thead>
+        <div class = "sticky">
       <tr>
         <th class="tg-c3ow" rowspan="2">Nr. crt.</th>
         <th class="tg-c3ow" rowspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Denumirea defectului  &nbsp;&nbsp;&nbsp;          </th>
@@ -94,12 +101,13 @@
         <th class="tg-c3ow" rowspan="2">Obs.</th>
       </tr>
       <tr>
-        <th class="tg-abip">C1</th>
-        <th class="tg-abip">C2</th>
-        <th class="tg-abip">C3</th>
-        <th class="tg-abip">C4</th>
-        <th class="tg-abip">C5</th>
+        <th class="tg-abip" id="sticky-div">C1</th>
+        <th class="tg-abip" id="sticky-div">C2</th>
+        <th class="tg-abip" id="sticky-div">C3</th>
+        <th class="tg-abip" id="sticky-div">C4</th>
+        <th class="tg-abip" id="sticky-div">C5</th>
       </tr>
+      </div>
     </thead>
     <tbody>
       <tr>
@@ -2302,6 +2310,8 @@
 {{if .}}
     <h4>Hello {{.}}. You re logged in</h4>
 {{end}}
+
+</center>
 
 </body>
 </html>
