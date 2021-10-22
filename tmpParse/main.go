@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"strconv"
 	"text/template"
 	"unicode"
 
@@ -19,11 +20,12 @@ var db *sql.DB
 var store = sessions.NewCookieStore([]byte("super-secret"))
 
 type Calculus struct {
-	Max_c1 uint16
-	Max_c2 uint16
-	Max_c3 uint16
-	Max_c4 uint16
-	Max_c5 uint16
+	Max_c1     int
+	Dif_Max_c1 int
+	Max_c2     int
+	Max_c3     int
+	Max_c4     int
+	Max_c5     int
 }
 
 type Product struct {
@@ -220,7 +222,7 @@ func main() {
 	http.HandleFunc("/delete/", deleteHandler)
 	http.HandleFunc("/update/", updateHandler)
 	http.HandleFunc("/updateresult/", updateResultHandler)
-	//http.HandleFunc("/calculate/", calculateHandler)
+	http.HandleFunc("/calculate/", calculateHandler)
 	http.ListenAndServe(":8080", nil)
 }
 
@@ -237,6 +239,7 @@ func calculateHandler(w http.ResponseWriter, r *http.Request) {
 	id := r.FormValue("idbridge")
 	row := db.QueryRow("SELECT * FROM mygodatabase.bridges WHERE id = ?;", id)
 	var p Product
+	var c Calculus
 	// func (r *Row) Scan(dest ...interface{}) error
 	err := row.Scan(&p.ID,
 		&p.User,
@@ -409,8 +412,32 @@ func calculateHandler(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/browse", 307)
 		return
 	}
+	var c1 = [44]string{p.P_75c1, p.P_76c1,
+		p.P_77c1,
+		p.P_78c1,
+		p.P_79c1,
+		p.P_80c1, p.P_74c1, p.P_72c1, p.P_71c1, p.P_70c1, p.P_68c1, p.P_67c1, p.P_64c1, p.P_62c1, p.P_60c1, p.P_57c1, p.P_56c1, p.P_54c1, p.P_49c1, p.P_45c1, p.P_44c1, p.P_41c1, p.P_40c1, p.P_39c1, p.P_37c1, p.P_36c1, p.P_35c1, p.P_34c1, p.P_32c1, p.P_27c1,
+		p.P_28c1, p.P_19c1, p.P_18c1, p.P_17c1, p.P_16c1, p.P_15c1, p.P_14c1, p.P_12c1, p.P_10c1, p.P_9c1, p.P_8c1, p.P_7c1, p.P_6c1, p.P_1c1}
+
 	//do calculus for bridge
-	tpl.ExecuteTemplate(w, "calculate.html", p)
+	c.Dif_Max_c1, c.Max_c1 = findDifAndMax(c1)
+	tpl.ExecuteTemplate(w, "calculate.html", c)
+}
+
+func findDifAndMax(c [44]string) (dif int, max int) {
+	dif = 0
+	j, _ := strconv.Atoi(c[0])
+	max = j
+	for _, value := range c {
+		i, _ := strconv.Atoi(value)
+		if i != 0 {
+			dif += 1
+		}
+		if i > max {
+			max = i
+		}
+	}
+	return dif, max
 }
 
 func updateHandler(w http.ResponseWriter, r *http.Request) {
