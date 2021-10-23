@@ -23,9 +23,13 @@ type Calculus struct {
 	Max_c1     int
 	Dif_Max_c1 int
 	Max_c2     int
+	Dif_Max_c2 int
 	Max_c3     int
+	Dif_Max_c3 int
 	Max_c4     int
+	Dif_Max_c4 int
 	Max_c5     int
+	Dif_Max_c5 int
 }
 
 type Product struct {
@@ -412,19 +416,49 @@ func calculateHandler(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/browse", 307)
 		return
 	}
-	var c1 = [44]string{p.P_75c1, p.P_76c1,
+	var c1 = []string{p.P_75c1, p.P_76c1,
 		p.P_77c1,
 		p.P_78c1,
 		p.P_79c1,
 		p.P_80c1, p.P_74c1, p.P_72c1, p.P_71c1, p.P_70c1, p.P_68c1, p.P_67c1, p.P_64c1, p.P_62c1, p.P_60c1, p.P_57c1, p.P_56c1, p.P_54c1, p.P_49c1, p.P_45c1, p.P_44c1, p.P_41c1, p.P_40c1, p.P_39c1, p.P_37c1, p.P_36c1, p.P_35c1, p.P_34c1, p.P_32c1, p.P_27c1,
 		p.P_28c1, p.P_19c1, p.P_18c1, p.P_17c1, p.P_16c1, p.P_15c1, p.P_14c1, p.P_12c1, p.P_10c1, p.P_9c1, p.P_8c1, p.P_7c1, p.P_6c1, p.P_1c1}
+	var c2 = []string{p.P_81c2,
+		p.P_82c2,
+		p.P_83c2, p.P_74c2, p.P_70c2, p.P_68c2, p.P_67c2, p.P_62c2, p.P_60c2, p.P_57c2, p.P_49c2, p.P_44c2, p.P_41c2, p.P_40c2, p.P_37c2, p.P_36c2, p.P_35c2, p.P_34c2, p.P_32c2, p.P_31c2, p.P_26c2, p.P_18c2, p.P_17c2, p.P_16c2, p.P_15c2, p.P_14c2, p.P_12c2, p.P_9c2, p.P_8c2, p.P_7c2, p.P_6c2, p.P_1c2}
+	var c3 = []string{p.P_84c3,
+		p.P_85c3,
+		p.P_86c3,
+		p.P_87c3,
+		p.P_88c3,
+		p.P_89c3,
+		p.P_90c3, p.P_74c3, p.P_71c3,
+		p.P_72c3,
+		p.P_73c3, p.P_68c3, p.P_67c3, p.P_64c3, p.P_58c3,
+		p.P_59c3, p.P_54c3, p.P_52c3, p.P_44c3, p.P_43c3, p.P_37c3, p.P_36c3, p.P_35c3, p.P_33c3, p.P_31c3, p.P_29c3,
+		p.P_30c3, p.P_25c3, p.P_17c3, p.P_16c3, p.P_14c3, p.P_12c3, p.P_9c3, p.P_8c3, p.P_7c3, p.P_6c3, p.P_4c3,
+		p.P_5c3}
+	var c4 = []string{p.P_69c4, p.P_55c4, p.P_53c4, p.P_47c4, p.P_23c4, p.P_22c4, p.P_2c4}
+	var c5 = []string{p.P_91c5,
+		p.P_92c5,
+		p.P_93c5,
+		p.P_94c5,
+		p.P_95c5,
+		p.P_96c5,
+		p.P_97c5, p.P_65c5,
+		p.P_66c5, p.P_63c5, p.P_61c5, p.P_50c5,
+		p.P_51c5, p.P_48c5, p.P_46c5, p.P_42c5, p.P_38c5, p.P_24c5, p.P_20c5,
+		p.P_21c5, p.P_13c5, p.P_11c5, p.P_3c5}
 
 	//do calculus for bridge
 	c.Dif_Max_c1, c.Max_c1 = findDifAndMax(c1)
+	c.Dif_Max_c2, c.Max_c2 = findDifAndMax(c2)
+	c.Dif_Max_c3, c.Max_c3 = findDifAndMax(c3)
+	c.Dif_Max_c4, c.Max_c4 = findDifAndMax(c4)
+	c.Dif_Max_c5, c.Max_c5 = findDifAndMax(c5)
 	tpl.ExecuteTemplate(w, "calculate.html", c)
 }
 
-func findDifAndMax(c [44]string) (dif int, max int) {
+func findDifAndMax(c []string) (dif int, max int) {
 	dif = 0
 	j, _ := strconv.Atoi(c[0])
 	max = j
@@ -437,7 +471,7 @@ func findDifAndMax(c [44]string) (dif int, max int) {
 			max = i
 		}
 	}
-	return dif, max
+	return dif, 10 - max
 }
 
 func updateHandler(w http.ResponseWriter, r *http.Request) {
