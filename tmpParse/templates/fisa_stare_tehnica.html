@@ -28,8 +28,39 @@
     <label for="tip_pod">Tipul podului dupa schema statica de rezistenta, oblicitate:</label>
     <input type="text" id="tip_pod" name="tip_pod"><br>
 
-    <label for="material">Materialul din care este alcatuit:</label>
-    <input type="text" id="material" name="material"><br>
+    Materialul din care este alcatuit:<select name = "material">
+        <option value = "Metal">Metal</option>
+        <option value = "Beton armat">Beton armat</option>
+        <option value = "Beton precomprimat">Beton precomprimat</option>
+        <option value = "Lemn">Lemn</option>
+          
+     </select><br>
+
+     Tip suprastructura:<select name = "tip_supra">
+        <option value = "Grinzi nituite">Grinzi nituite</option>
+        <option value = "Sudate">Sudate</option>
+        <option value = "Grinzi Matarov">Grinzi Matarov</option>
+        <option value = "Grinzi Gerber">Grinzi Gerber</option>
+        <option value = "Fasii cu goluri fara placa">Fasii cu goluri fara placa</option>
+        <option value = "Fasii cu goluri cu placa">Fasii cu goluri cu placa</option>
+        <option value = "Grinzi tronsonate">Grinzi tronsonate</option>
+        <option value = "Grinzi prefabricate monobloc si grinzi monolit">Grinzi prefabricate monobloc si grinzi monolit</option>
+          
+     </select><br>
+
+     
+
+    Durata de exploatare:<select name = "durata">
+        <option value = "0-5">0-5</option>
+        <option value = "6-15">6-15</option>
+        <option value = "16-25">16-25</option>
+        <option value = "26-35">26-35</option>
+        <option value = "36-45">36-45</option>
+        <option value = ">45">>45</option>
+          
+     </select><br>
+
+    
     
     <label for="lungime">Lungimea totala a podului, numarul de deschideri si lungimea lor:</label>
     <input type="text" id="lungime" name="lungime"><br>
@@ -67,8 +98,11 @@
     <label for="aparari">Aparari de mal:</label>
     <input type="text" id="aparari" name="aparari"><br>
 
-    <label for="clasa">Clasa tehnica:</label>
+    <label for="clasa">Clasa tehnica (1,2,3,4,5):</label>
     <input type="text" id="clasa" name="clasa" ><br>
+
+    <label for="clasa_incarcare">Clasa incarcare pod (E,1,2):</label>
+    <input type="text" id="clasa_incarcare" name="clasa_incarcare" ><br>
     
     
  <br>
