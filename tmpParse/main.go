@@ -30,6 +30,8 @@ type Calculus struct {
 	Dif_Max_c4 int
 	Max_c5     int
 	Dif_Max_c5 int
+	Clasa_f1   int
+	Lungime    float64
 }
 
 type Product struct {
@@ -55,6 +57,7 @@ type Product struct {
 	Parapeti_siguranta string
 	Racordari          string
 	Aparari            string
+	Clasa              string
 	P_1c1              string
 	P_1c2              string
 	P_2c4              string
@@ -267,6 +270,7 @@ func calculateHandler(w http.ResponseWriter, r *http.Request) {
 		&p.Parapeti_siguranta,
 		&p.Racordari,
 		&p.Aparari,
+		&p.Clasa,
 		&p.P_1c1,
 		&p.P_1c2,
 		&p.P_2c4,
@@ -455,6 +459,12 @@ func calculateHandler(w http.ResponseWriter, r *http.Request) {
 	c.Dif_Max_c3, c.Max_c3 = findDifAndMax(c3)
 	c.Dif_Max_c4, c.Max_c4 = findDifAndMax(c4)
 	c.Dif_Max_c5, c.Max_c5 = findDifAndMax(c5)
+
+	j, _ := strconv.Atoi(p.Clasa)
+	f, _ := strconv.ParseFloat(p.Lungime, 64)
+
+	c.Clasa_f1 = j
+	c.Lungime = f
 	tpl.ExecuteTemplate(w, "calculate.html", c)
 }
 
@@ -510,6 +520,7 @@ func updateHandler(w http.ResponseWriter, r *http.Request) {
 		&p.Parapeti_siguranta,
 		&p.Racordari,
 		&p.Aparari,
+		&p.Clasa,
 		&p.P_1c1,
 		&p.P_1c2,
 		&p.P_2c4,
@@ -693,6 +704,7 @@ func updateResultHandler(w http.ResponseWriter, r *http.Request) {
 	parapeti_siguranta := r.FormValue("parapeti_siguranta")
 	racordari := r.FormValue("racordari")
 	aparari := r.FormValue("aparari")
+	clasa := r.FormValue("clasa")
 
 	_1c1 := r.FormValue("1c1")
 	_1c2 := r.FormValue("1c2")
@@ -839,7 +851,7 @@ func updateResultHandler(w http.ResponseWriter, r *http.Request) {
 	_96c5 := r.FormValue("96c5")
 	_97c5 := r.FormValue("97c5")
 
-	upStmt := "UPDATE `mygodatabase`.`bridges` SET  `tip_lucrare`= ?, `obstacol`= ?, `localitatea`= ?, `categorie`= ?, `pozitie_km`= ?, `an_constructie`= ?, `tip_pod`= ?, `materialul`= ?, `lung_pod`= ?, `latime_pod`= ?, `reazem`= ?, `infrastructura`= ?, `tip_fundatii`= ?, `imbracaminte`= ?, `rosturi`= ?, `pozitie`= ?, `parapet_pietonal`= ?, `parapeti_siguranta`= ?, `racordari_terasamente`= ?, `aparari_mal`= ?, `1c1`= ?, `1c2`= ?, `2c4`= ?, `3c5`= ?, `4c3`= ?, `5c3`= ?, `6c1`= ?, `6c2`= ?, `6c3`= ?, `7c1`= ?, `7c2`= ?, `7c3`= ?, `8c1`= ?, `8c2`= ?, `8c3`= ?, `9c1`= ?, `9c2`= ?, `9c3`= ?, `10c1`= ?, `11c5`= ?, `12c1`= ?,`12c2`= ?, `12c3`= ?, `13c5`= ?, `14c1`= ?, `14c2`= ?, `14c3`= ?, `15c1`= ?, `15c2`= ?, `16c1`= ?, `16c2`= ?, `16c3`= ?, `17c1`= ?, `17c2`= ?, `17c3`= ?, `18c1`= ?, `18c2`= ?, `19c1`= ?, `20c5`= ?, `21c5`= ?, `22c4`= ?, `23c4`= ?, `24c5`= ?, `25c3`= ?, `26c2`= ?, `27c1`= ?, `28c1`= ?, `29c3`= ?, `30c3`= ?, `31c2`= ?, `31c3`= ?,`32c1`= ?, `32c2`= ?, `33c3`= ?, `34c1`= ?, `34c2`= ?, `35c1`= ?, `35c2`= ?, `35c3`= ?, `36c1`= ?,`36c2` =?, `36c3` = ?, `37c1`= ?, `37c2`= ?, `37c3`=?, `38c5`= ?, `39c1`= ?, `40c1`= ?, `40c2`= ?, `41c1`= ?, `41c2`= ?, `42c5`= ?,`43c3`= ?, `44c1`= ?, `44c2`= ?, `44c3`= ?, `45c1`= ?, `46c5`= ?, `47c4`= ?, `48c5`= ?, `49c1`= ?, `49c2`= ?, `50c5`= ?, `51c5`=?,`52c3`=?, `53c4`= ?, `54c1`= ?, `54c3`= ?, `55c4`= ?, `56c1`= ?, `57c1`= ?, `57c2`=?, `58c3`= ?, `59c3`= ?, `60c1`= ?,`60c2`= ?, `61c5`= ?, `62c1`= ?, `62c2`= ?, `63c5`= ?, `64c1`= ?, `64c3`= ?, `65c5`= ?, `66c5`= ?, `67c1`= ?, `67c2`= ?, `67c3`= ?, `68c1`= ?, `68c2`= ?, `68c3`= ?, `69c4`= ?, `70c1`= ?, `70c2`= ?, `71c1`= ?, `71c3`= ?, `72c1`= ?, `72c3`= ?, `73c3`= ?, `74c1`= ?, `74c2`= ?, `74c3`= ?, `75c1`= ?, `76c1`= ?, `77c1`= ?, `78c1`= ?, `79c1`= ?, `80c1`= ?, `81c2`= ?, `82c2`= ?, `83c2`= ?, `84c3`= ?, `85c3`= ?, `86c3`= ?, `87c3`= ?, `88c3`= ?, `89c3`= ?, `90c3`= ?, `91c5`= ?, `92c5`= ?, `93c5`= ?, `94c5`= ?, `95c5`= ?, `96c5` = ?, `97c5` = ? WHERE (`id` = ?);"
+	upStmt := "UPDATE `mygodatabase`.`bridges` SET  `tip_lucrare`= ?, `obstacol`= ?, `localitatea`= ?, `categorie`= ?, `pozitie_km`= ?, `an_constructie`= ?, `tip_pod`= ?, `materialul`= ?, `lung_pod`= ?, `latime_pod`= ?, `reazem`= ?, `infrastructura`= ?, `tip_fundatii`= ?, `imbracaminte`= ?, `rosturi`= ?, `pozitie`= ?, `parapet_pietonal`= ?, `parapeti_siguranta`= ?, `racordari_terasamente`= ?, `aparari_mal`= ?,`clasa_tehnica`= ?,`1c1`= ?, `1c2`= ?, `2c4`= ?, `3c5`= ?, `4c3`= ?, `5c3`= ?, `6c1`= ?, `6c2`= ?, `6c3`= ?, `7c1`= ?, `7c2`= ?, `7c3`= ?, `8c1`= ?, `8c2`= ?, `8c3`= ?, `9c1`= ?, `9c2`= ?, `9c3`= ?, `10c1`= ?, `11c5`= ?, `12c1`= ?,`12c2`= ?, `12c3`= ?, `13c5`= ?, `14c1`= ?, `14c2`= ?, `14c3`= ?, `15c1`= ?, `15c2`= ?, `16c1`= ?, `16c2`= ?, `16c3`= ?, `17c1`= ?, `17c2`= ?, `17c3`= ?, `18c1`= ?, `18c2`= ?, `19c1`= ?, `20c5`= ?, `21c5`= ?, `22c4`= ?, `23c4`= ?, `24c5`= ?, `25c3`= ?, `26c2`= ?, `27c1`= ?, `28c1`= ?, `29c3`= ?, `30c3`= ?, `31c2`= ?, `31c3`= ?,`32c1`= ?, `32c2`= ?, `33c3`= ?, `34c1`= ?, `34c2`= ?, `35c1`= ?, `35c2`= ?, `35c3`= ?, `36c1`= ?,`36c2` =?, `36c3` = ?, `37c1`= ?, `37c2`= ?, `37c3`=?, `38c5`= ?, `39c1`= ?, `40c1`= ?, `40c2`= ?, `41c1`= ?, `41c2`= ?, `42c5`= ?,`43c3`= ?, `44c1`= ?, `44c2`= ?, `44c3`= ?, `45c1`= ?, `46c5`= ?, `47c4`= ?, `48c5`= ?, `49c1`= ?, `49c2`= ?, `50c5`= ?, `51c5`=?,`52c3`=?, `53c4`= ?, `54c1`= ?, `54c3`= ?, `55c4`= ?, `56c1`= ?, `57c1`= ?, `57c2`=?, `58c3`= ?, `59c3`= ?, `60c1`= ?,`60c2`= ?, `61c5`= ?, `62c1`= ?, `62c2`= ?, `63c5`= ?, `64c1`= ?, `64c3`= ?, `65c5`= ?, `66c5`= ?, `67c1`= ?, `67c2`= ?, `67c3`= ?, `68c1`= ?, `68c2`= ?, `68c3`= ?, `69c4`= ?, `70c1`= ?, `70c2`= ?, `71c1`= ?, `71c3`= ?, `72c1`= ?, `72c3`= ?, `73c3`= ?, `74c1`= ?, `74c2`= ?, `74c3`= ?, `75c1`= ?, `76c1`= ?, `77c1`= ?, `78c1`= ?, `79c1`= ?, `80c1`= ?, `81c2`= ?, `82c2`= ?, `83c2`= ?, `84c3`= ?, `85c3`= ?, `86c3`= ?, `87c3`= ?, `88c3`= ?, `89c3`= ?, `90c3`= ?, `91c5`= ?, `92c5`= ?, `93c5`= ?, `94c5`= ?, `95c5`= ?, `96c5` = ?, `97c5` = ? WHERE (`id` = ?);"
 	// func (db *DB) Prepare(query string) (*Stmt, error)
 	stmt, err := db.Prepare(upStmt)
 	if err != nil {
@@ -871,6 +883,7 @@ func updateResultHandler(w http.ResponseWriter, r *http.Request) {
 		parapeti_siguranta,
 		racordari,
 		aparari,
+		clasa,
 		_1c1,
 		_1c2,
 		_2c4,
@@ -1101,6 +1114,7 @@ func browseHandler(w http.ResponseWriter, r *http.Request) {
 			&p.Parapeti_siguranta,
 			&p.Racordari,
 			&p.Aparari,
+			&p.Clasa,
 			&p.P_1c1,
 			&p.P_1c2,
 			&p.P_2c4,
@@ -1478,6 +1492,7 @@ func addBridgeHandler(w http.ResponseWriter, r *http.Request) {
 	parapeti_siguranta := r.FormValue("parapeti_siguranta")
 	racordari := r.FormValue("racordari")
 	aparari := r.FormValue("aparari")
+	clasa := r.FormValue("clasa")
 
 	_1c1 := r.FormValue("1c1")
 	_1c2 := r.FormValue("1c2")
@@ -1633,7 +1648,7 @@ func addBridgeHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var insertStmt *sql.Stmt
-	insertStmt, err = db.Prepare("INSERT INTO bridges (user, tip_lucrare, obstacol, localitatea, categorie, pozitie_km, an_constructie, tip_pod, materialul, lung_pod, latime_pod, reazem, infrastructura, tip_fundatii, imbracaminte, rosturi, pozitie, parapet_pietonal, parapeti_siguranta, racordari_terasamente, aparari_mal, 1c1, 1c2, 2c4, 3c5, 4c3, 5c3, 6c1, 6c2, 6c3, 7c1, 7c2, 7c3, 8c1, 8c2, 8c3, 9c1, 9c2, 9c3, 10c1, 11c5, 12c1,12c2, 12c3, 13c5, 14c1, 14c2, 14c3, 15c1, 15c2, 16c1, 16c2, 16c3, 17c1, 17c2, 17c3, 18c1, 18c2, 19c1, 20c5, 21c5, 22c4, 23c4, 24c5, 25c3, 26c2, 27c1, 28c1, 29c3, 30c3, 31c2, 31c3, 32c1, 32c2, 33c3, 34c1, 34c2, 35c1, 35c2, 35c3, 36c1,36c2, 36c3, 37c1, 37c2, 37c3, 38c5, 39c1, 40c1, 40c2, 41c1, 41c2, 42c5,43c3, 44c1, 44c2, 44c3, 45c1, 46c5, 47c4, 48c5, 49c1, 49c2, 50c5, 51c5,52c3, 53c4, 54c1, 54c3, 55c4, 56c1, 57c1, 57c2, 58c3, 59c3, 60c1, 60c2, 61c5, 62c1, 62c2, 63c5, 64c1, 64c3, 65c5, 66c5, 67c1, 67c2, 67c3, 68c1, 68c2, 68c3, 69c4, 70c1, 70c2, 71c1, 71c3, 72c1, 72c3, 73c3, 74c1, 74c2, 74c3, 75c1, 76c1, 77c1, 78c1, 79c1, 80c1, 81c2, 82c2, 83c2, 84c3, 85c3, 86c3, 87c3, 88c3, 89c3, 90c3, 91c5, 92c5, 93c5, 94c5, 95c5, 96c5, 97c5) VALUES (?, ?, ?, ?, ?, ?, ? ,? ,?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?, ?, ?, ?, ?, ?, ?);")
+	insertStmt, err = db.Prepare("INSERT INTO bridges (user, tip_lucrare, obstacol, localitatea, categorie, pozitie_km, an_constructie, tip_pod, materialul, lung_pod, latime_pod, reazem, infrastructura, tip_fundatii, imbracaminte, rosturi, pozitie, parapet_pietonal, parapeti_siguranta, racordari_terasamente, aparari_mal,clasa_tehnica, 1c1, 1c2, 2c4, 3c5, 4c3, 5c3, 6c1, 6c2, 6c3, 7c1, 7c2, 7c3, 8c1, 8c2, 8c3, 9c1, 9c2, 9c3, 10c1, 11c5, 12c1,12c2, 12c3, 13c5, 14c1, 14c2, 14c3, 15c1, 15c2, 16c1, 16c2, 16c3, 17c1, 17c2, 17c3, 18c1, 18c2, 19c1, 20c5, 21c5, 22c4, 23c4, 24c5, 25c3, 26c2, 27c1, 28c1, 29c3, 30c3, 31c2, 31c3, 32c1, 32c2, 33c3, 34c1, 34c2, 35c1, 35c2, 35c3, 36c1,36c2, 36c3, 37c1, 37c2, 37c3, 38c5, 39c1, 40c1, 40c2, 41c1, 41c2, 42c5,43c3, 44c1, 44c2, 44c3, 45c1, 46c5, 47c4, 48c5, 49c1, 49c2, 50c5, 51c5,52c3, 53c4, 54c1, 54c3, 55c4, 56c1, 57c1, 57c2, 58c3, 59c3, 60c1, 60c2, 61c5, 62c1, 62c2, 63c5, 64c1, 64c3, 65c5, 66c5, 67c1, 67c2, 67c3, 68c1, 68c2, 68c3, 69c4, 70c1, 70c2, 71c1, 71c3, 72c1, 72c3, 73c3, 74c1, 74c2, 74c3, 75c1, 76c1, 77c1, 78c1, 79c1, 80c1, 81c2, 82c2, 83c2, 84c3, 85c3, 86c3, 87c3, 88c3, 89c3, 90c3, 91c5, 92c5, 93c5, 94c5, 95c5, 96c5, 97c5) VALUES (?, ?, ?, ?, ?, ?, ? ,? ,?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?, ?, ?, ?, ?, ?, ?,?);")
 	if err != nil {
 		fmt.Println("error preparing statement:", err)
 		tpl.ExecuteTemplate(w, "fisa_stare_tehnica.html", "there was a problem registering bridge")
@@ -1665,6 +1680,7 @@ func addBridgeHandler(w http.ResponseWriter, r *http.Request) {
 		parapeti_siguranta,
 		racordari,
 		aparari,
+		clasa,
 		_1c1,
 		_1c2,
 		_2c4,

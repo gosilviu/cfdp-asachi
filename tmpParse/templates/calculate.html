@@ -1,6 +1,47 @@
 {{template "Header"}}
 <!DOCTYPE html>
 <html> 
+    
+    <head><script>
+        function f1(){
+         const arr = [[0, 7,8,0,8,9,0,9,10], [0,6,7,0,7,8,0,8,9], [0,4,5,0,5,6,0,6,7], [0,0,1,0,2,3,0,4,5], [0,0,0,0,1,2,0,3,4]]
+         var golang_clasa = "{{.Clasa_f1}}";
+         var golang_lungime = "{{.Lungime}}";
+         var coloana;
+         var styles = `
+.tg  {border:none;border-collapse:collapse;border-color:#bbb;border-spacing:0;}
+.tg td{background-color:#E0FFEB;border-color:#bbb;border-style:solid;border-width:0px;color:#594F4F;
+  font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{background-color:#9DE0AD;border-color:#bbb;border-style:solid;border-width:0px;color:#493F3F;
+  font-family:Arial, sans-serif;font-size:14px;font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
+`
+
+var styleSheet = document.createElement("style")
+styleSheet.type = "text/css"
+styleSheet.innerText = styles
+document.head.appendChild(styleSheet)
+         
+        var value = document.getElementById("opt").value;
+
+        if (parseInt(golang_lungime) < 25)
+        {
+            coloana = parseInt(value);
+        }
+        if (parseInt(golang_lungime) >=26 && parseInt(golang_lungime) <=100)
+        {
+            coloana = parseInt(value) + 3;
+        }
+        if (parseInt(golang_lungime) >= 101)
+        {
+            coloana = parseInt(value) + 6;
+        }
+        document.getElementById("demo").innerHTML = "<table class='tg'><thead><tr><th class='tg-0pky'>0</th><th class='tg-0pky'>7</th><th class='tg-0pky'>8</th><th class='tg-0pky'>0</th><th class='tg-0pky'>8</th><th class='tg-0pky'>9</th><th class='tg-0pky'>0</th><th class='tg-0pky'>9</th><th class='tg-0pky'>10</th></tr></thead><tbody><tr><td class=tg-0pky>0</td><td class=tg-0pky>7</td><td class=tg-0pky>6</td><td class=tg-0pky>0</td><td class=tg-0pky>7</td><td class=tg-0pky>8</td><td class=tg-0pky>0</td><td class=tg-0pky>8</td><td class=tg-0pky>9</td></tr><tr><td class=tg-0pky>0</td><td class=tg-0pky>4</td><td class=tg-0pky>5</td><td class=tg-0pky>0</td><td class=tg-0pky>5</td><td class=tg-0pky>6</td><td class=tg-0pky>0</td><td class=tg-0pky>6</td><td class=tg-0pky>7</td></tr><tr><td class=tg-0pky>0</td><td class=tg-0pky>0</td><td class=tg-0pky>1</td><td class=tg-0pky>0</td><td class=tg-0pky>2</td><td class=tg-0pky>3</td><td class=tg-0pky>0</td><td class=tg-0pky>4</td><td class=tg-0pky>5</td></tr><tr><td class=tg-0pky>0</td><td class=tg-0pky>0</td><td class=tg-0pky>0</td><td class=tg-0pky>0</td><td class=tg-0pky>1</td><td class=tg-0pky>2</td><td class=tg-0pky>0</td><td class=tg-0pky>3</td><td class=tg-0pky>4</td></tr></tbody></table>";
+        document.getElementById("demo1").innerHTML = arr[parseInt(golang_clasa)-1][parseInt(coloana)-1];
+        
+     }
+    </script>
+    </head>
 <body><center>
 
 <h2>Numar de defecte</h2><br>
@@ -16,6 +57,20 @@ pentru C2 {{.Max_c2}}<br>
 pentru C3 {{.Max_c3}}<br>
 pentru C4 {{.Max_c4}}<br>
 pentru C5 {{.Max_c5}}<br>
+
+<h2>Valoare indice F1</h2><br>
+
+
+<select id = "opt" onchange="f1()">
+    
+    <option value = "1" >Care corespunde cu latimea partii carosabile a drumului cu spatiu de siguranta</option>
+    <option value = "2" >Care corespunde cu latimea partii carosabile a drumului fara spatiu de siguranta</option>
+    <option value = "3" >Care nu corespunde cu latimea partii carosabile a drumului cu spatiu de siguranta</option>
+      
+ </select>
+ <p id="demo"></p>
+ <p id="demo1"></p>
+
 
 <br><br>
 <a href="/about">About</a> <a href="/logout">Logout</a> <a href="/addbridge">Add Bridge</a> <a href="/contact">Contact</a> <a href="/browse">Your Bridges</a> 
