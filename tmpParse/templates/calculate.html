@@ -49,6 +49,30 @@ document.head.appendChild(styleSheet)
         document.getElementById("demo1").innerHTML = "Valoare indice F1: " + calcul_f1 + "<br>F1: " + f1[parseInt(golang_clasa)-1][parseInt(coloana)-1];
         
      }
+     function f4(){
+        var value1 = document.getElementById("opt1").value;
+        var value2 = document.getElementById("opt2").value;
+        var value3 = document.getElementById("opt3").value;
+        var value4 = document.getElementById("opt4").value;
+        var value5 = document.getElementById("opt5").value;
+        var value6 = document.getElementById("opt6").value;
+        var value7 = document.getElementById("opt7").value;
+        var value8 = document.getElementById("opt8").value;
+
+        //document.getElementById("demof4").innerHTML =value1;
+        var maxim =Math.max(parseInt(value1),parseInt(value2),parseInt(value3),parseInt(value4),parseInt(value5),parseInt(value6),parseInt(value7),parseInt(value8));
+        var indice_f4 = 10-parseInt(maxim);
+        document.getElementById("demof4").innerHTML = "F4: "+maxim+ "<br> Valoare indice F4: "+ indice_f4;
+     }
+     function f5(){
+        var value1 = document.getElementById("opt11").value;
+        var value2 = document.getElementById("opt12").value;
+        var value3 = document.getElementById("opt13").value;
+        
+        var maxim =Math.max(parseInt(value1),parseInt(value2),parseInt(value3));
+        var indice_f5 = 10-parseInt(maxim);
+        document.getElementById("demof5").innerHTML = "F5: "+maxim+ "<br> Valoare indice F5: "+ indice_f5;
+     }
     </script>
     </head>
 <body><center>
@@ -127,6 +151,119 @@ pentru C5 {{.Max_c5}}<br>
     <h2>Valoare indice F3</h2><br>
     F3: {{.F3}}<br>
     Valoare indice F3: {{.Val_f3}}
+
+    <h2>Valoare indice F4</h2><br>
+    <table class="tg">
+        <thead>
+          <tr>
+            <th class="tg-baqh">Denumire defect</th>
+            <th class="tg-baqh">Depunctare</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="tg-0lax">Lipsa de estetica a incadrarii podului in mediul inconjurator</td>
+            <td class="tg-0lax"><select id = "opt1" onchange="f4()">
+                <option value = "3" >3</option>
+                <option value = "4" >4</option>
+             </select></td>
+          </tr>
+          <tr>
+            <td class="tg-0lax">Lipsa marcajelor si a indicatoarelor de semnalizare, lipsa panourilor de <br>protectie la pasajele superioare peste cai ferate</td>
+            <td class="tg-0lax"><select id = "opt2" onchange="f4()">
+                <option value = "2" >2</option>
+                <option value = "3" >3</option>
+             </select></td>
+          </tr>
+          <tr>
+            <td class="tg-0lax">Lipsa indicatoarelor de restrictie viteza, tonaj si gabarit</td>
+            <td class="tg-0lax"><select id = "opt3" onchange="f4()">
+                <option value = "7" >7</option>
+                <option value = "8" >8</option>
+             </select></td>
+          </tr>
+          <tr>
+            <td class="tg-0lax">Lipsa sau nefunctonarea dispozitivelor de intretinere, imposibilitatea<br>accesului la elementele podului pentru inspectie, intretinere si reparatii</td>
+            <td class="tg-0lax"><select id = "opt4" onchange="f4()">
+                <option value = "5" >5</option>
+                <option value = "6" >6</option>
+             </select></td>
+          </tr>
+          <tr>
+            <td class="tg-0lax">Neasigurarea scurgerii apei, stagnarea apei pe pod, existenta unor<br>straturi suplimentare a imbracamintiipe pod</td>
+            <td class="tg-0lax"><select id = "opt5" onchange="f4()">
+                <option value = "2" >2</option>
+                <option value = "3" >3</option>
+                <option value = "4" >4</option>
+                <option value = "5" >5</option>
+             </select></td>
+          </tr>
+          <tr>
+            <td class="tg-0lax">Necorelarea amplasamanetului podului cu drumul si traseul albiei<br>amplasarea in gabarit a unor elemente de constructie, restrictii de viteza</td>
+            <td class="tg-0lax"><select id = "opt6" onchange="f4()">
+                <option value = "7" >7</option>
+                <option value = "8" >8</option>
+             </select></td>
+          </tr>
+          <tr>
+            <td class="tg-0lax">Nerespectarea dimensiunilor la elementele de rezistena ale suprastructurii</td>
+            <td class="tg-0lax"><select id = "opt7" onchange="f4()">
+                <option value = "5" >5</option>
+                <option value = "6" >6</option>
+             </select></td>
+          </tr>
+          <tr>
+            <td class="tg-0lax">Rezemarea incorecta a grinzilor pe infrastructura</td>
+            <td class="tg-0lax"><select id = "opt8" onchange="f4()">
+                <option value = "8" >8</option>
+                <option value = "9" >9</option>
+             </select></td>
+          </tr>
+        </tbody>
+        </table>
+
+        <p id="demof4"></p>
+
+        <h2>Valoare indice F5</h2><br>
+    <table class="tg">
+        <thead>
+          <tr>
+            <th class="tg-baqh">Calitatea lucrarilor de intretinere</th>
+            <th class="tg-baqh">Depunctare</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="tg-0lax">Buna(maxim 20% din lucrarile de intretinere nerealizate)</td>
+            <td class="tg-0lax"><select id = "opt11" onchange="f5()">
+                <option value = "1" >1</option>
+                <option value = "2" >2</option>
+             </select></td>
+          </tr>
+          
+          <tr>
+            <td class="tg-0lax">Satisfacatoare(maxim 50% din lucrarile de intretinere nerealizate)</td>
+            <td class="tg-0lax"><select id = "opt12" onchange="f5()">
+                <option value = "3" >3</option>
+                <option value = "4" >4</option>
+                <option value = "5" >5</option>
+                <option value = "6" >6</option>
+             </select></td>
+          </tr>
+          <tr>
+            <td class="tg-0lax">Lipsa totala a lucrarilor de intretinere(peste 50% din lucrarile de intretinere nerealizate)</td>
+            <td class="tg-0lax"><select id = "opt13" onchange="f5()">
+                <option value = "7" >7</option>
+                <option value = "8" >8</option>
+                <option value = "9" >9</option>
+             </select></td>
+          </tr>
+          
+           
+        </tbody>
+        </table>
+
+        <p id="demof5"></p>
 
 
 <br><br>
