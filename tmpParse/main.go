@@ -37,6 +37,7 @@ type Calculus struct {
 	Val_f2          int
 	F3              int
 	Val_f3          int
+	Suma_ci         int
 }
 
 type Product struct {
@@ -470,6 +471,8 @@ func calculateHandler(w http.ResponseWriter, r *http.Request) {
 	c.Dif_Max_c3, c.Max_c3 = findDifAndMax(c3)
 	c.Dif_Max_c4, c.Max_c4 = findDifAndMax(c4)
 	c.Dif_Max_c5, c.Max_c5 = findDifAndMax(c5)
+
+	c.Suma_ci = c.Max_c1 + c.Max_c2 + c.Max_c3 + c.Max_c4 + c.Max_c5
 
 	j, _ := strconv.Atoi(p.Clasa)
 	f, _ := strconv.ParseFloat(p.Lungime, 64)

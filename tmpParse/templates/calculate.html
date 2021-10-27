@@ -10,7 +10,11 @@
         .tg .tg-c3ow{border-color:inherit;text-align:center;vertical-align:top}
         </style>
     
-    <head><script>
+    <head>
+    </head>
+<body><center>
+    <script>
+        const sume_fi = [1,2];
         function f1(){
          const f1 = [[0, 7,8,0,8,9,0,9,10], [0,6,7,0,7,8,0,8,9], [0,4,5,0,5,6,0,6,7], [0,0,1,0,2,3,0,4,5], [0,0,0,0,1,2,0,3,4]]
          var golang_clasa = "{{.Clasa_f1}}";
@@ -47,7 +51,7 @@ document.head.appendChild(styleSheet)
         var calcul_f1 = 10 - parseInt(f1[parseInt(golang_clasa)-1][parseInt(coloana)-1]);
         document.getElementById("demo").innerHTML = "<table class='tg'><thead><tr><td class='tg-0pky'>I</td><td class='tg-0pky'>0</td><td class='tg-0pky'>7</td><td class='tg-0pky'>8</td><td class='tg-0pky'>0</td><td class='tg-0pky'>8</td><td class='tg-0pky'>9</td><td class='tg-0pky'>0</td><td class='tg-0pky'>9</td><td class='tg-0pky'>10</td></tr></thead><tbody><tr><td class=tg-0pky>II</td><td class=tg-0pky>0</td><td class=tg-0pky>7</td><td class=tg-0pky>6</td><td class=tg-0pky>0</td><td class=tg-0pky>7</td><td class=tg-0pky>8</td><td class=tg-0pky>0</td><td class=tg-0pky>8</td><td class=tg-0pky>9</td></tr><tr><td class=tg-0pky>III</td><td class=tg-0pky>0</td><td class=tg-0pky>4</td><td class=tg-0pky>5</td><td class=tg-0pky>0</td><td class=tg-0pky>5</td><td class=tg-0pky>6</td><td class=tg-0pky>0</td><td class=tg-0pky>6</td><td class=tg-0pky>7</td></tr><tr><td class=tg-0pky>IV</td><td class=tg-0pky>0</td><td class=tg-0pky>0</td><td class=tg-0pky>1</td><td class=tg-0pky>0</td><td class=tg-0pky>2</td><td class=tg-0pky>3</td><td class=tg-0pky>0</td><td class=tg-0pky>4</td><td class=tg-0pky>5</td></tr><tr><td class=tg-0pky>V</td><td class=tg-0pky>0</td><td class=tg-0pky>0</td><td class=tg-0pky>0</td><td class=tg-0pky>0</td><td class=tg-0pky>1</td><td class=tg-0pky>2</td><td class=tg-0pky>0</td><td class=tg-0pky>3</td><td class=tg-0pky>4</td></tr></tbody></table>";
         document.getElementById("demo1").innerHTML = "Valoare indice F1: " + calcul_f1 + "<br>F1: " + f1[parseInt(golang_clasa)-1][parseInt(coloana)-1];
-        
+        sume_fi.push(calcul_f1);
      }
      function f4(){
         var value1 = document.getElementById("opt1").value;
@@ -62,6 +66,8 @@ document.head.appendChild(styleSheet)
         //document.getElementById("demof4").innerHTML =value1;
         var maxim =Math.max(parseInt(value1),parseInt(value2),parseInt(value3),parseInt(value4),parseInt(value5),parseInt(value6),parseInt(value7),parseInt(value8));
         var indice_f4 = 10-parseInt(maxim);
+        sume_fi.push(indice_f4);
+        
         document.getElementById("demof4").innerHTML = "F4: "+maxim+ "<br> Valoare indice F4: "+ indice_f4;
      }
      function f5(){
@@ -71,11 +77,23 @@ document.head.appendChild(styleSheet)
         
         var maxim =Math.max(parseInt(value1),parseInt(value2),parseInt(value3));
         var indice_f5 = 10-parseInt(maxim);
+        sume_fi.push(indice_f5);
         document.getElementById("demof5").innerHTML = "F5: "+maxim+ "<br> Valoare indice F5: "+ indice_f5;
+        
      }
+    //  function f6()
+    //  {
+    //      var val_f2 = "{{.Val_f2}}";
+    //      var val_f3 = "{{.Val_f3}}";
+    //      document.getElementById("demo_suma_fi").innerHTML =parseInt(val_f2)+parseInt(val_f3)+parseInt(suma_fi);
+    //  }
+    window.onload = function(){
+    
+var ceva=1312432
+    document.getElementById('demo_suma_fi').innerHTML = sume_fi;
+};
+
     </script>
-    </head>
-<body><center>
 
 <h2>Numar de defecte</h2><br>
 pentru C1: {{.Dif_Max_c1}}<br>
@@ -264,6 +282,12 @@ pentru C5 {{.Max_c5}}<br>
         </table>
 
         <p id="demof5"></p>
+
+        <h2>Suma Ci</h2>
+        {{.Suma_ci}}
+        <h2>Suma Fi</h2>
+        <p id="demo_suma_fi"></p>
+        
 
 
 <br><br>
