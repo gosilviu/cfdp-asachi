@@ -14,25 +14,16 @@
     </head>
 <body><center>
     <script>
-        const sume_fi = [1,2];
+        var valf2= "{{.Val_f2}}";
+        var valf3= "{{.Val_f3}}";
+        var sumaci= "{{.Suma_ci}}";
+        var sume_fi = [0,0,0,parseInt(valf2),parseInt(valf3),parseInt(sumaci)];
+        var sume_ci_fi =[0,parseInt(sumaci)];
         function f1(){
          const f1 = [[0, 7,8,0,8,9,0,9,10], [0,6,7,0,7,8,0,8,9], [0,4,5,0,5,6,0,6,7], [0,0,1,0,2,3,0,4,5], [0,0,0,0,1,2,0,3,4]]
          var golang_clasa = "{{.Clasa_f1}}";
          var golang_lungime = "{{.Lungime}}";
          var coloana;
-         var styles = `
-.tg  {border:none;border-collapse:collapse;border-color:#bbb;border-spacing:0;}
-.tg td{background-color:#E0FFEB;border-color:#bbb;border-style:solid;border-width:0px;color:#594F4F;
-  font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;word-break:normal;}
-.tg th{background-color:#9DE0AD;border-color:#bbb;border-style:solid;border-width:0px;color:#493F3F;
-  font-family:Arial, sans-serif;font-size:14px;font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
-.tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
-`
-
-var styleSheet = document.createElement("style")
-styleSheet.type = "text/css"
-styleSheet.innerText = styles
-document.head.appendChild(styleSheet)
          
         var value = document.getElementById("opt").value;
 
@@ -49,9 +40,29 @@ document.head.appendChild(styleSheet)
             coloana = parseInt(value) + 6;
         }
         var calcul_f1 = 10 - parseInt(f1[parseInt(golang_clasa)-1][parseInt(coloana)-1]);
-        document.getElementById("demo").innerHTML = "<table class='tg'><thead><tr><td class='tg-0pky'>I</td><td class='tg-0pky'>0</td><td class='tg-0pky'>7</td><td class='tg-0pky'>8</td><td class='tg-0pky'>0</td><td class='tg-0pky'>8</td><td class='tg-0pky'>9</td><td class='tg-0pky'>0</td><td class='tg-0pky'>9</td><td class='tg-0pky'>10</td></tr></thead><tbody><tr><td class=tg-0pky>II</td><td class=tg-0pky>0</td><td class=tg-0pky>7</td><td class=tg-0pky>6</td><td class=tg-0pky>0</td><td class=tg-0pky>7</td><td class=tg-0pky>8</td><td class=tg-0pky>0</td><td class=tg-0pky>8</td><td class=tg-0pky>9</td></tr><tr><td class=tg-0pky>III</td><td class=tg-0pky>0</td><td class=tg-0pky>4</td><td class=tg-0pky>5</td><td class=tg-0pky>0</td><td class=tg-0pky>5</td><td class=tg-0pky>6</td><td class=tg-0pky>0</td><td class=tg-0pky>6</td><td class=tg-0pky>7</td></tr><tr><td class=tg-0pky>IV</td><td class=tg-0pky>0</td><td class=tg-0pky>0</td><td class=tg-0pky>1</td><td class=tg-0pky>0</td><td class=tg-0pky>2</td><td class=tg-0pky>3</td><td class=tg-0pky>0</td><td class=tg-0pky>4</td><td class=tg-0pky>5</td></tr><tr><td class=tg-0pky>V</td><td class=tg-0pky>0</td><td class=tg-0pky>0</td><td class=tg-0pky>0</td><td class=tg-0pky>0</td><td class=tg-0pky>1</td><td class=tg-0pky>2</td><td class=tg-0pky>0</td><td class=tg-0pky>3</td><td class=tg-0pky>4</td></tr></tbody></table>";
         document.getElementById("demo1").innerHTML = "Valoare indice F1: " + calcul_f1 + "<br>F1: " + f1[parseInt(golang_clasa)-1][parseInt(coloana)-1];
-        sume_fi.push(calcul_f1);
+        
+        sume_fi[0]=(parseInt(calcul_f1));
+        
+        
+        document.getElementById('demo_suma_fi').innerHTML = sume_fi[0]+sume_fi[1]+sume_fi[2]+sume_fi[3]+sume_fi[4];
+        sume_ci_fi[0]=sume_fi[0]+sume_fi[1]+sume_fi[2]+sume_fi[3]+sume_fi[4];
+        
+        document.getElementById('demo_suma_ci_fi').innerHTML = sume_ci_fi[0]+sume_ci_fi[1];
+        if(sume_ci_fi[0]+sume_ci_fi[1] >=81 && sume_ci_fi[0]+sume_ci_fi[1]<=100)
+        document.getElementById('ist').innerHTML = "Stare foarte buna";
+
+        if(sume_ci_fi[0]+sume_ci_fi[1] >=61 && sume_ci_fi[0]+sume_ci_fi[1]<=80)
+        document.getElementById('ist').innerHTML = "Stare buna. Materialul din care sunt alcatuite suprastructura si infrastructura prezinta un inceput de degradare cu defecte si degradari vizibile";
+
+        if(sume_ci_fi[0]+sume_ci_fi[1] >=41 && sume_ci_fi[0]+sume_ci_fi[1]<=60)
+        document.getElementById('ist').innerHTML = "Stare satisfacatoare. Elementele constructive prezinta degradari vizibile pe zone intinse cu afectarea sectiunii transversale";
+
+        if(sume_ci_fi[0]+sume_ci_fi[1] >=21 && sume_ci_fi[0]+sume_ci_fi[1]<=40)
+        document.getElementById('ist').innerHTML = "Stare nesatisfacatoare. Elementele constructive sunt intr o stare avansata de degradare.";
+
+        if(sume_ci_fi[0]+sume_ci_fi[1]<=20)
+        document.getElementById('ist').innerHTML = "Starea tehnica nu asigura conditiile minime de siguranta a circulatiei";
      }
      function f4(){
         var value1 = document.getElementById("opt1").value;
@@ -66,9 +77,28 @@ document.head.appendChild(styleSheet)
         //document.getElementById("demof4").innerHTML =value1;
         var maxim =Math.max(parseInt(value1),parseInt(value2),parseInt(value3),parseInt(value4),parseInt(value5),parseInt(value6),parseInt(value7),parseInt(value8));
         var indice_f4 = 10-parseInt(maxim);
-        sume_fi.push(indice_f4);
-        
+        sume_fi[1]=(parseInt(indice_f4));
+        document.getElementById('demo_suma_fi').innerHTML = sume_fi[0]+sume_fi[1]+sume_fi[2]+sume_fi[3]+sume_fi[4];
         document.getElementById("demof4").innerHTML = "F4: "+maxim+ "<br> Valoare indice F4: "+ indice_f4;
+
+        sume_ci_fi[0]=sume_fi[0]+sume_fi[1]+sume_fi[2]+sume_fi[3]+sume_fi[4];
+        
+        document.getElementById('demo_suma_ci_fi').innerHTML = sume_ci_fi[0]+sume_ci_fi[1];
+
+        if(sume_ci_fi[0]+sume_ci_fi[1] >=81 && sume_ci_fi[0]+sume_ci_fi[1]<=100)
+        document.getElementById('ist').innerHTML = "Stare foarte buna";
+
+        if(sume_ci_fi[0]+sume_ci_fi[1] >=61 && sume_ci_fi[0]+sume_ci_fi[1]<=80)
+        document.getElementById('ist').innerHTML = "Stare buna. Materialul din care sunt alcatuite suprastructura si infrastructura prezinta un inceput de degradare cu defecte si degradari vizibile";
+
+        if(sume_ci_fi[0]+sume_ci_fi[1] >=41 && sume_ci_fi[0]+sume_ci_fi[1]<=60)
+        document.getElementById('ist').innerHTML = "Stare satisfacatoare. Elementele constructive prezinta degradari vizibile pe zone intinse cu afectarea sectiunii transversale";
+
+        if(sume_ci_fi[0]+sume_ci_fi[1] >=21 && sume_ci_fi[0]+sume_ci_fi[1]<=40)
+        document.getElementById('ist').innerHTML = "Stare nesatisfacatoare. Elementele constructive sunt intr o stare avansata de degradare.";
+
+        if(sume_ci_fi[0]+sume_ci_fi[1]<=20)
+        document.getElementById('ist').innerHTML = "Starea tehnica nu asigura conditiile minime de siguranta a circulatiei";
      }
      function f5(){
         var value1 = document.getElementById("opt11").value;
@@ -77,8 +107,29 @@ document.head.appendChild(styleSheet)
         
         var maxim =Math.max(parseInt(value1),parseInt(value2),parseInt(value3));
         var indice_f5 = 10-parseInt(maxim);
-        sume_fi.push(indice_f5);
+
+        sume_fi[2]=(parseInt(indice_f5));
+        document.getElementById('demo_suma_fi').innerHTML = sume_fi[0]+sume_fi[1]+sume_fi[2]+sume_fi[3]+sume_fi[4];
         document.getElementById("demof5").innerHTML = "F5: "+maxim+ "<br> Valoare indice F5: "+ indice_f5;
+
+        sume_ci_fi[0]=sume_fi[0]+sume_fi[1]+sume_fi[2]+sume_fi[3]+sume_fi[4];
+        
+        document.getElementById('demo_suma_ci_fi').innerHTML = sume_ci_fi[0]+sume_ci_fi[1];
+
+        if(sume_ci_fi[0]+sume_ci_fi[1] >=81 && sume_ci_fi[0]+sume_ci_fi[1]<=100)
+        document.getElementById('ist').innerHTML = "Stare foarte buna";
+
+        if(sume_ci_fi[0]+sume_ci_fi[1] >=61 && sume_ci_fi[0]+sume_ci_fi[1]<=80)
+        document.getElementById('ist').innerHTML = "Stare buna. Materialul din care sunt alcatuite suprastructura si infrastructura prezinta un inceput de degradare cu defecte si degradari vizibile";
+
+        if(sume_ci_fi[0]+sume_ci_fi[1] >=41 && sume_ci_fi[0]+sume_ci_fi[1]<=60)
+        document.getElementById('ist').innerHTML = "Stare satisfacatoare. Elementele constructive prezinta degradari vizibile pe zone intinse cu afectarea sectiunii transversale";
+
+        if(sume_ci_fi[0]+sume_ci_fi[1] >=21 && sume_ci_fi[0]+sume_ci_fi[1]<=40)
+        document.getElementById('ist').innerHTML = "Stare nesatisfacatoare. Elementele constructive sunt intr o stare avansata de degradare.";
+
+        if(sume_ci_fi[0]+sume_ci_fi[1]<=20)
+        document.getElementById('ist').innerHTML = "Starea tehnica nu asigura conditiile minime de siguranta a circulatiei";
         
      }
     //  function f6()
@@ -87,11 +138,7 @@ document.head.appendChild(styleSheet)
     //      var val_f3 = "{{.Val_f3}}";
     //      document.getElementById("demo_suma_fi").innerHTML =parseInt(val_f2)+parseInt(val_f3)+parseInt(suma_fi);
     //  }
-    window.onload = function(){
-    
-var ceva=1312432
-    document.getElementById('demo_suma_fi').innerHTML = sume_fi;
-};
+ 
 
     </script>
 
@@ -110,6 +157,7 @@ pentru C4 {{.Max_c4}}<br>
 pentru C5 {{.Max_c5}}<br>
 
 <h2>Valoare indice F1</h2><br>
+<table class='tg'><thead><tr><td class='tg-0pky'>I</td><td class='tg-0pky'>0</td><td class='tg-0pky'>7</td><td class='tg-0pky'>8</td><td class='tg-0pky'>0</td><td class='tg-0pky'>8</td><td class='tg-0pky'>9</td><td class='tg-0pky'>0</td><td class='tg-0pky'>9</td><td class='tg-0pky'>10</td></tr></thead><tbody><tr><td class='tg-0pky'>II</td><td class=tg-0pky>0</td><td class=tg-0pky>7</td><td class=tg-0pky>6</td><td class=tg-0pky>0</td><td class=tg-0pky>7</td><td class=tg-0pky>8</td><td class=tg-0pky>0</td><td class=tg-0pky>8</td><td class=tg-0pky>9</td></tr><tr><td class=tg-0pky>III</td><td class=tg-0pky>0</td><td class=tg-0pky>4</td><td class=tg-0pky>5</td><td class=tg-0pky>0</td><td class=tg-0pky>5</td><td class=tg-0pky>6</td><td class=tg-0pky>0</td><td class=tg-0pky>6</td><td class=tg-0pky>7</td></tr><tr><td class=tg-0pky>IV</td><td class=tg-0pky>0</td><td class=tg-0pky>0</td><td class=tg-0pky>1</td><td class=tg-0pky>0</td><td class=tg-0pky>2</td><td class=tg-0pky>3</td><td class=tg-0pky>0</td><td class=tg-0pky>4</td><td class=tg-0pky>5</td></tr><tr><td class=tg-0pky>V</td><td class=tg-0pky>0</td><td class=tg-0pky>0</td><td class=tg-0pky>0</td><td class=tg-0pky>0</td><td class=tg-0pky>1</td><td class=tg-0pky>2</td><td class=tg-0pky>0</td><td class=tg-0pky>3</td><td class=tg-0pky>4</td></tr></tbody></table>
 
 
 <select id = "opt" onchange="f1()">
@@ -119,7 +167,7 @@ pentru C5 {{.Max_c5}}<br>
     <option value = "3" >Care nu corespunde cu latimea partii carosabile a drumului cu spatiu de siguranta</option>
       
  </select>
- <p id="demo"></p>
+ 
  <p id="demo1"></p>
 
  <h2>Valoare indice F2</h2><br>
@@ -287,6 +335,11 @@ pentru C5 {{.Max_c5}}<br>
         {{.Suma_ci}}
         <h2>Suma Fi</h2>
         <p id="demo_suma_fi"></p>
+        <h2>Suma Ci + Fi</h2>
+        <p id="demo_suma_ci_fi"></p>
+        <h2>Valoarea indicelui de stare tehnica</h2>
+        <p id="ist"></p>
+        
         
 
 
