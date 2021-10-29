@@ -67,6 +67,8 @@ type Product struct {
 	Clasa_incarcare    string
 	Tip_supra          string
 	Durata             string
+	Lat                string
+	Lng                string
 	P_1c1              string
 	P_1c2              string
 	P_2c4              string
@@ -235,11 +237,212 @@ func main() {
 	http.HandleFunc("/fisa_stare_tehnica", fisaStareTehnica)
 	http.HandleFunc("/addbridgehandler", addBridgeHandler)
 	http.HandleFunc("/browse", browseHandler)
+	http.HandleFunc("/browseMap", browseMapHandler)
 	http.HandleFunc("/delete/", deleteHandler)
 	http.HandleFunc("/update/", updateHandler)
 	http.HandleFunc("/updateresult/", updateResultHandler)
 	http.HandleFunc("/calculate/", calculateHandler)
 	http.ListenAndServe(":8080", nil)
+}
+
+func browseMapHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("*****browseMapHandler running*****")
+	session, _ := store.Get(r, "session")
+	_, ok := session.Values["userID"]
+	fmt.Println("ok:", ok)
+	if !ok {
+		http.Redirect(w, r, "/login", http.StatusFound) // http.StatusFound is 302
+		return
+	}
+	stmt := "SELECT * FROM bridges"
+	rows, err := db.Query(stmt)
+	if err != nil {
+		panic(err)
+	}
+	defer rows.Close()
+	var products []Product
+	for rows.Next() {
+		var p Product
+		err = rows.Scan(&p.ID,
+			&p.User,
+			&p.Tip_lucrare,
+			&p.Obstacol_traversat,
+			&p.Localitate,
+			&p.Categoria_drum,
+			&p.Poz_km,
+			&p.An_consolidat,
+			&p.Tip_pod,
+			&p.Material,
+			&p.Lungime,
+			&p.Latime,
+			&p.Reazem,
+			&p.Infra,
+			&p.Fundatii,
+			&p.Imbracaminte,
+			&p.Rosturi,
+			&p.Pozitie,
+			&p.Parapeti_pietonali,
+			&p.Parapeti_siguranta,
+			&p.Racordari,
+			&p.Aparari,
+			&p.Clasa,
+			&p.Clasa_incarcare,
+			&p.Tip_supra,
+			&p.Durata,
+			&p.Lat,
+			&p.Lng,
+			&p.P_1c1,
+			&p.P_1c2,
+			&p.P_2c4,
+			&p.P_3c5,
+			&p.P_4c3,
+			&p.P_5c3,
+			&p.P_6c1,
+			&p.P_6c2,
+			&p.P_6c3,
+			&p.P_7c1,
+			&p.P_7c2,
+			&p.P_7c3,
+			&p.P_8c1,
+			&p.P_8c2,
+			&p.P_8c3,
+			&p.P_9c1,
+			&p.P_9c2,
+			&p.P_9c3,
+			&p.P_10c1,
+			&p.P_11c5,
+			&p.P_12c1,
+			&p.P_12c2,
+			&p.P_12c3,
+			&p.P_13c5,
+			&p.P_14c1,
+			&p.P_14c2,
+			&p.P_14c3,
+			&p.P_15c1,
+			&p.P_15c2,
+			&p.P_16c1,
+			&p.P_16c2,
+			&p.P_16c3,
+			&p.P_17c1,
+			&p.P_17c2,
+			&p.P_17c3,
+			&p.P_18c1,
+			&p.P_18c2,
+			&p.P_19c1,
+			&p.P_20c5,
+			&p.P_21c5,
+			&p.P_22c4,
+			&p.P_23c4,
+			&p.P_24c5,
+			&p.P_25c3,
+			&p.P_26c2,
+			&p.P_27c1,
+			&p.P_28c1,
+			&p.P_29c3,
+			&p.P_30c3,
+			&p.P_31c2,
+			&p.P_31c3,
+			&p.P_32c1,
+			&p.P_32c2,
+			&p.P_33c3,
+			&p.P_34c1,
+			&p.P_34c2,
+			&p.P_35c1,
+			&p.P_35c2,
+			&p.P_35c3,
+			&p.P_36c1,
+			&p.P_36c2,
+			&p.P_36c3,
+			&p.P_37c1,
+			&p.P_37c2,
+			&p.P_37c3,
+			&p.P_38c5,
+			&p.P_39c1,
+			&p.P_40c1,
+			&p.P_40c2,
+			&p.P_41c1,
+			&p.P_41c2,
+			&p.P_42c5,
+			&p.P_43c3,
+			&p.P_44c1,
+			&p.P_44c2,
+			&p.P_44c3,
+			&p.P_45c1,
+			&p.P_46c5,
+			&p.P_47c4,
+			&p.P_48c5,
+			&p.P_49c1,
+			&p.P_49c2,
+			&p.P_50c5,
+			&p.P_51c5,
+			&p.P_52c3,
+			&p.P_53c4,
+			&p.P_54c1,
+			&p.P_54c3,
+			&p.P_55c4,
+			&p.P_56c1,
+			&p.P_57c1,
+			&p.P_57c2,
+			&p.P_58c3,
+			&p.P_59c3,
+			&p.P_60c1,
+			&p.P_60c2,
+			&p.P_61c5,
+			&p.P_62c1,
+			&p.P_62c2,
+			&p.P_63c5,
+			&p.P_64c1,
+			&p.P_64c3,
+			&p.P_65c5,
+			&p.P_66c5,
+			&p.P_67c1,
+			&p.P_67c2,
+			&p.P_67c3,
+			&p.P_68c1,
+			&p.P_68c2,
+			&p.P_68c3,
+			&p.P_69c4,
+			&p.P_70c1,
+			&p.P_70c2,
+			&p.P_71c1,
+			&p.P_71c3,
+			&p.P_72c1,
+			&p.P_72c3,
+			&p.P_73c3,
+			&p.P_74c1,
+			&p.P_74c2,
+			&p.P_74c3,
+			&p.P_75c1,
+			&p.P_76c1,
+			&p.P_77c1,
+			&p.P_78c1,
+			&p.P_79c1,
+			&p.P_80c1,
+			&p.P_81c2,
+			&p.P_82c2,
+			&p.P_83c2,
+			&p.P_84c3,
+			&p.P_85c3,
+			&p.P_86c3,
+			&p.P_87c3,
+			&p.P_88c3,
+			&p.P_89c3,
+			&p.P_90c3,
+			&p.P_91c5,
+			&p.P_92c5,
+			&p.P_93c5,
+			&p.P_94c5,
+			&p.P_95c5,
+			&p.P_96c5,
+			&p.P_97c5)
+
+		if err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+		}
+		products = append(products, p)
+	}
+	tpl.ExecuteTemplate(w, "browsemap.html", products)
 }
 
 func calculateHandler(w http.ResponseWriter, r *http.Request) {
@@ -283,6 +486,8 @@ func calculateHandler(w http.ResponseWriter, r *http.Request) {
 		&p.Clasa_incarcare,
 		&p.Tip_supra,
 		&p.Durata,
+		&p.Lat,
+		&p.Lng,
 		&p.P_1c1,
 		&p.P_1c2,
 		&p.P_2c4,
@@ -621,6 +826,8 @@ func updateHandler(w http.ResponseWriter, r *http.Request) {
 		&p.Clasa_incarcare,
 		&p.Tip_supra,
 		&p.Durata,
+		&p.Lat,
+		&p.Lng,
 		&p.P_1c1,
 		&p.P_1c2,
 		&p.P_2c4,
@@ -808,6 +1015,8 @@ func updateResultHandler(w http.ResponseWriter, r *http.Request) {
 	clasa_incarcare := r.FormValue("clasa_incarcare")
 	tip_supra := r.FormValue("tip_supra")
 	durata := r.FormValue("durata")
+	lat := r.FormValue("lat")
+	lng := r.FormValue("lng")
 
 	_1c1 := r.FormValue("1c1")
 	_1c2 := r.FormValue("1c2")
@@ -954,7 +1163,7 @@ func updateResultHandler(w http.ResponseWriter, r *http.Request) {
 	_96c5 := r.FormValue("96c5")
 	_97c5 := r.FormValue("97c5")
 
-	upStmt := "UPDATE `mygodatabase`.`bridges` SET  `tip_lucrare`= ?, `obstacol`= ?, `localitatea`= ?, `categorie`= ?, `pozitie_km`= ?, `an_constructie`= ?, `tip_pod`= ?, `materialul`= ?, `lung_pod`= ?, `latime_pod`= ?, `reazem`= ?, `infrastructura`= ?, `tip_fundatii`= ?, `imbracaminte`= ?, `rosturi`= ?, `pozitie`= ?, `parapet_pietonal`= ?, `parapeti_siguranta`= ?, `racordari_terasamente`= ?, `aparari_mal`= ?,`clasa_tehnica`= ?, `clasa_incarcare`=? ,`tip_suprastructura` =?,`durata_exploatare`=?,`1c1`= ?, `1c2`= ?, `2c4`= ?, `3c5`= ?, `4c3`= ?, `5c3`= ?, `6c1`= ?, `6c2`= ?, `6c3`= ?, `7c1`= ?, `7c2`= ?, `7c3`= ?, `8c1`= ?, `8c2`= ?, `8c3`= ?, `9c1`= ?, `9c2`= ?, `9c3`= ?, `10c1`= ?, `11c5`= ?, `12c1`= ?,`12c2`= ?, `12c3`= ?, `13c5`= ?, `14c1`= ?, `14c2`= ?, `14c3`= ?, `15c1`= ?, `15c2`= ?, `16c1`= ?, `16c2`= ?, `16c3`= ?, `17c1`= ?, `17c2`= ?, `17c3`= ?, `18c1`= ?, `18c2`= ?, `19c1`= ?, `20c5`= ?, `21c5`= ?, `22c4`= ?, `23c4`= ?, `24c5`= ?, `25c3`= ?, `26c2`= ?, `27c1`= ?, `28c1`= ?, `29c3`= ?, `30c3`= ?, `31c2`= ?, `31c3`= ?,`32c1`= ?, `32c2`= ?, `33c3`= ?, `34c1`= ?, `34c2`= ?, `35c1`= ?, `35c2`= ?, `35c3`= ?, `36c1`= ?,`36c2` =?, `36c3` = ?, `37c1`= ?, `37c2`= ?, `37c3`=?, `38c5`= ?, `39c1`= ?, `40c1`= ?, `40c2`= ?, `41c1`= ?, `41c2`= ?, `42c5`= ?,`43c3`= ?, `44c1`= ?, `44c2`= ?, `44c3`= ?, `45c1`= ?, `46c5`= ?, `47c4`= ?, `48c5`= ?, `49c1`= ?, `49c2`= ?, `50c5`= ?, `51c5`=?,`52c3`=?, `53c4`= ?, `54c1`= ?, `54c3`= ?, `55c4`= ?, `56c1`= ?, `57c1`= ?, `57c2`=?, `58c3`= ?, `59c3`= ?, `60c1`= ?,`60c2`= ?, `61c5`= ?, `62c1`= ?, `62c2`= ?, `63c5`= ?, `64c1`= ?, `64c3`= ?, `65c5`= ?, `66c5`= ?, `67c1`= ?, `67c2`= ?, `67c3`= ?, `68c1`= ?, `68c2`= ?, `68c3`= ?, `69c4`= ?, `70c1`= ?, `70c2`= ?, `71c1`= ?, `71c3`= ?, `72c1`= ?, `72c3`= ?, `73c3`= ?, `74c1`= ?, `74c2`= ?, `74c3`= ?, `75c1`= ?, `76c1`= ?, `77c1`= ?, `78c1`= ?, `79c1`= ?, `80c1`= ?, `81c2`= ?, `82c2`= ?, `83c2`= ?, `84c3`= ?, `85c3`= ?, `86c3`= ?, `87c3`= ?, `88c3`= ?, `89c3`= ?, `90c3`= ?, `91c5`= ?, `92c5`= ?, `93c5`= ?, `94c5`= ?, `95c5`= ?, `96c5` = ?, `97c5` = ? WHERE (`id` = ?);"
+	upStmt := "UPDATE `mygodatabase`.`bridges` SET  `tip_lucrare`= ?, `obstacol`= ?, `localitatea`= ?, `categorie`= ?, `pozitie_km`= ?, `an_constructie`= ?, `tip_pod`= ?, `materialul`= ?, `lung_pod`= ?, `latime_pod`= ?, `reazem`= ?, `infrastructura`= ?, `tip_fundatii`= ?, `imbracaminte`= ?, `rosturi`= ?, `pozitie`= ?, `parapet_pietonal`= ?, `parapeti_siguranta`= ?, `racordari_terasamente`= ?, `aparari_mal`= ?,`clasa_tehnica`= ?, `clasa_incarcare`=? ,`tip_suprastructura` =?,`durata_exploatare`=?,`lat`=?,`lng`=?,`1c1`= ?, `1c2`= ?, `2c4`= ?, `3c5`= ?, `4c3`= ?, `5c3`= ?, `6c1`= ?, `6c2`= ?, `6c3`= ?, `7c1`= ?, `7c2`= ?, `7c3`= ?, `8c1`= ?, `8c2`= ?, `8c3`= ?, `9c1`= ?, `9c2`= ?, `9c3`= ?, `10c1`= ?, `11c5`= ?, `12c1`= ?,`12c2`= ?, `12c3`= ?, `13c5`= ?, `14c1`= ?, `14c2`= ?, `14c3`= ?, `15c1`= ?, `15c2`= ?, `16c1`= ?, `16c2`= ?, `16c3`= ?, `17c1`= ?, `17c2`= ?, `17c3`= ?, `18c1`= ?, `18c2`= ?, `19c1`= ?, `20c5`= ?, `21c5`= ?, `22c4`= ?, `23c4`= ?, `24c5`= ?, `25c3`= ?, `26c2`= ?, `27c1`= ?, `28c1`= ?, `29c3`= ?, `30c3`= ?, `31c2`= ?, `31c3`= ?,`32c1`= ?, `32c2`= ?, `33c3`= ?, `34c1`= ?, `34c2`= ?, `35c1`= ?, `35c2`= ?, `35c3`= ?, `36c1`= ?,`36c2` =?, `36c3` = ?, `37c1`= ?, `37c2`= ?, `37c3`=?, `38c5`= ?, `39c1`= ?, `40c1`= ?, `40c2`= ?, `41c1`= ?, `41c2`= ?, `42c5`= ?,`43c3`= ?, `44c1`= ?, `44c2`= ?, `44c3`= ?, `45c1`= ?, `46c5`= ?, `47c4`= ?, `48c5`= ?, `49c1`= ?, `49c2`= ?, `50c5`= ?, `51c5`=?,`52c3`=?, `53c4`= ?, `54c1`= ?, `54c3`= ?, `55c4`= ?, `56c1`= ?, `57c1`= ?, `57c2`=?, `58c3`= ?, `59c3`= ?, `60c1`= ?,`60c2`= ?, `61c5`= ?, `62c1`= ?, `62c2`= ?, `63c5`= ?, `64c1`= ?, `64c3`= ?, `65c5`= ?, `66c5`= ?, `67c1`= ?, `67c2`= ?, `67c3`= ?, `68c1`= ?, `68c2`= ?, `68c3`= ?, `69c4`= ?, `70c1`= ?, `70c2`= ?, `71c1`= ?, `71c3`= ?, `72c1`= ?, `72c3`= ?, `73c3`= ?, `74c1`= ?, `74c2`= ?, `74c3`= ?, `75c1`= ?, `76c1`= ?, `77c1`= ?, `78c1`= ?, `79c1`= ?, `80c1`= ?, `81c2`= ?, `82c2`= ?, `83c2`= ?, `84c3`= ?, `85c3`= ?, `86c3`= ?, `87c3`= ?, `88c3`= ?, `89c3`= ?, `90c3`= ?, `91c5`= ?, `92c5`= ?, `93c5`= ?, `94c5`= ?, `95c5`= ?, `96c5` = ?, `97c5` = ? WHERE (`id` = ?);"
 	// func (db *DB) Prepare(query string) (*Stmt, error)
 	stmt, err := db.Prepare(upStmt)
 	if err != nil {
@@ -990,6 +1199,8 @@ func updateResultHandler(w http.ResponseWriter, r *http.Request) {
 		clasa_incarcare,
 		tip_supra,
 		durata,
+		lat,
+		lng,
 		_1c1,
 		_1c2,
 		_2c4,
@@ -1224,6 +1435,8 @@ func browseHandler(w http.ResponseWriter, r *http.Request) {
 			&p.Clasa_incarcare,
 			&p.Tip_supra,
 			&p.Durata,
+			&p.Lat,
+			&p.Lng,
 			&p.P_1c1,
 			&p.P_1c2,
 			&p.P_2c4,
@@ -1605,6 +1818,8 @@ func addBridgeHandler(w http.ResponseWriter, r *http.Request) {
 	clasa_incarcare := r.FormValue("clasa_incarcare")
 	tip_supra := r.FormValue("tip_supra")
 	durata := r.FormValue("durata")
+	lat := r.FormValue("lat")
+	lng := r.FormValue("lng")
 
 	_1c1 := r.FormValue("1c1")
 	_1c2 := r.FormValue("1c2")
@@ -1760,7 +1975,7 @@ func addBridgeHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var insertStmt *sql.Stmt
-	insertStmt, err = db.Prepare("INSERT INTO bridges (user, tip_lucrare, obstacol, localitatea, categorie, pozitie_km, an_constructie, tip_pod, materialul, lung_pod, latime_pod, reazem, infrastructura, tip_fundatii, imbracaminte, rosturi, pozitie, parapet_pietonal, parapeti_siguranta, racordari_terasamente, aparari_mal,clasa_tehnica,clasa_incarcare,tip_suprastructura,durata_exploatare, 1c1, 1c2, 2c4, 3c5, 4c3, 5c3, 6c1, 6c2, 6c3, 7c1, 7c2, 7c3, 8c1, 8c2, 8c3, 9c1, 9c2, 9c3, 10c1, 11c5, 12c1,12c2, 12c3, 13c5, 14c1, 14c2, 14c3, 15c1, 15c2, 16c1, 16c2, 16c3, 17c1, 17c2, 17c3, 18c1, 18c2, 19c1, 20c5, 21c5, 22c4, 23c4, 24c5, 25c3, 26c2, 27c1, 28c1, 29c3, 30c3, 31c2, 31c3, 32c1, 32c2, 33c3, 34c1, 34c2, 35c1, 35c2, 35c3, 36c1,36c2, 36c3, 37c1, 37c2, 37c3, 38c5, 39c1, 40c1, 40c2, 41c1, 41c2, 42c5,43c3, 44c1, 44c2, 44c3, 45c1, 46c5, 47c4, 48c5, 49c1, 49c2, 50c5, 51c5,52c3, 53c4, 54c1, 54c3, 55c4, 56c1, 57c1, 57c2, 58c3, 59c3, 60c1, 60c2, 61c5, 62c1, 62c2, 63c5, 64c1, 64c3, 65c5, 66c5, 67c1, 67c2, 67c3, 68c1, 68c2, 68c3, 69c4, 70c1, 70c2, 71c1, 71c3, 72c1, 72c3, 73c3, 74c1, 74c2, 74c3, 75c1, 76c1, 77c1, 78c1, 79c1, 80c1, 81c2, 82c2, 83c2, 84c3, 85c3, 86c3, 87c3, 88c3, 89c3, 90c3, 91c5, 92c5, 93c5, 94c5, 95c5, 96c5, 97c5) VALUES (?, ?, ?, ?, ?, ?, ? ,? ,?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?, ?, ?, ?, ?, ?, ?,?,?,?,?);")
+	insertStmt, err = db.Prepare("INSERT INTO bridges (user, tip_lucrare, obstacol, localitatea, categorie, pozitie_km, an_constructie, tip_pod, materialul, lung_pod, latime_pod, reazem, infrastructura, tip_fundatii, imbracaminte, rosturi, pozitie, parapet_pietonal, parapeti_siguranta, racordari_terasamente, aparari_mal,clasa_tehnica,clasa_incarcare,tip_suprastructura,durata_exploatare,lat,lng, 1c1, 1c2, 2c4, 3c5, 4c3, 5c3, 6c1, 6c2, 6c3, 7c1, 7c2, 7c3, 8c1, 8c2, 8c3, 9c1, 9c2, 9c3, 10c1, 11c5, 12c1,12c2, 12c3, 13c5, 14c1, 14c2, 14c3, 15c1, 15c2, 16c1, 16c2, 16c3, 17c1, 17c2, 17c3, 18c1, 18c2, 19c1, 20c5, 21c5, 22c4, 23c4, 24c5, 25c3, 26c2, 27c1, 28c1, 29c3, 30c3, 31c2, 31c3, 32c1, 32c2, 33c3, 34c1, 34c2, 35c1, 35c2, 35c3, 36c1,36c2, 36c3, 37c1, 37c2, 37c3, 38c5, 39c1, 40c1, 40c2, 41c1, 41c2, 42c5,43c3, 44c1, 44c2, 44c3, 45c1, 46c5, 47c4, 48c5, 49c1, 49c2, 50c5, 51c5,52c3, 53c4, 54c1, 54c3, 55c4, 56c1, 57c1, 57c2, 58c3, 59c3, 60c1, 60c2, 61c5, 62c1, 62c2, 63c5, 64c1, 64c3, 65c5, 66c5, 67c1, 67c2, 67c3, 68c1, 68c2, 68c3, 69c4, 70c1, 70c2, 71c1, 71c3, 72c1, 72c3, 73c3, 74c1, 74c2, 74c3, 75c1, 76c1, 77c1, 78c1, 79c1, 80c1, 81c2, 82c2, 83c2, 84c3, 85c3, 86c3, 87c3, 88c3, 89c3, 90c3, 91c5, 92c5, 93c5, 94c5, 95c5, 96c5, 97c5) VALUES (?, ?, ?, ?, ?, ?, ? ,? ,?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?, ?, ?, ?, ?, ?, ?,?,?,?,?,?,?);")
 	if err != nil {
 		fmt.Println("error preparing statement:", err)
 		tpl.ExecuteTemplate(w, "fisa_stare_tehnica.html", "there was a problem registering bridge")
@@ -1796,6 +2011,8 @@ func addBridgeHandler(w http.ResponseWriter, r *http.Request) {
 		clasa_incarcare,
 		tip_supra,
 		durata,
+		lat,
+		lng,
 		_1c1,
 		_1c2,
 		_2c4,
