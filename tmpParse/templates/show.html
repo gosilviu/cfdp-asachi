@@ -1,0 +1,107 @@
+{{template "Header"}}
+<!DOCTYPE html>
+<html> 
+<body>
+    <center>
+
+<h2>Show Bridge</h2><br>
+<a href="/about">About</a> <a href="/logout">Logout</a> <a href="/addbridge">Add Bridge</a> <a href="/contact">Contact</a> <a href="/browse">Your Bridges</a> <br><br>
+
+
+    <label for="tip_lucrare">Tipul lucrarii de arta:</label>
+    {{.Tip_lucrare}}<br>
+
+    <label for="obstacol_traversat">Obstacol traversat</label>
+    {{.Obstacol_traversat}} <br>
+
+    <label for="localitate">Localitatea cea mai apropiata:</label>
+   {{.Localitate}}<br>
+
+    <label for="categoria_drum">Categoria, numarul drumului pe care este amplasat:</label>
+    {{.Categoria_drum}}<br>
+
+    <label for="poz_km">*Pozitia kilometrica:</label>
+    {{.Poz_km}}<br>
+
+    <label for="an_consolidat">Anul constructiei, anii consolidarilor sau reabilitarilor:</label>
+   {{.An_consolidat}}<br>
+
+    <label for="tip_pod">Tipul podului dupa schema statica de rezistenta, oblicitate:</label>
+    {{.Tip_pod}}<br>
+
+    Materialul din care este alcatuit:
+            {{.Material}}
+            
+          
+     <br>
+     Tip suprastructura:
+            {{.Tip_supra}}
+           <br>
+
+     
+
+    Durata de exploatare:
+            {{.Durata}}
+            <br>
+
+   
+    
+    <label for="lungime">Lungimea totala a podului, numarul de deschideri si lungimea lor:</label>
+    {{.Lungime}}<br>
+
+    <label for="latime">Latimea podului(parte carosabila+trotuare) numarul de grinzi in sectiunea transversala:</label>
+   {{.Latime}}<br>
+
+    <label for="reazem">Aparate de reazem(tip, materialul din care sunt construite, scheme de amplasare):</label>
+    {{.Reazem}}<br>
+
+    <label for="infra">Tip infrastructuri:</label>
+    {{.Infra}}<br>
+
+    <label for="fundatii">Tip fundatii:</label>
+   {{.Fundatii}}<br>
+
+    <label for="imbracaminte">Tipul imbracamintii pe pod:</label>
+   {{.Imbracaminte}}<br>
+
+    <label for="rosturi">Rosturi tip:</label>
+    {{.Rosturi}}<br>
+
+    <label for="pozitie">Pozitie:</label>
+   {{.Pozitie}}<br>
+
+    <label for="parapeti_pietonali">Parapeti pietonali:</label>
+    {{.Parapeti_pietonali}}<br>
+
+    <label for="parapeti_siguranta">Parapeti siguranta:</label>
+    {{.Parapeti_siguranta}}<br>
+
+    <label for="racordari">Racordari cu terasamanetele:</label>
+    {{.Racordari}}<br>
+
+    <label for="aparari">Aparari de mal:</label>
+    {{.Aparari}}<br>
+
+    <label for="clasa">Clasa tehnica (1,2,3,4,5):</label>
+    {{.Clasa}}<br>
+
+    <label for="clasa_incarcare">Clasa incarcare pod (E,1,2):</label>
+   {{.Clasa_incarcare}}<br>
+
+    <label for="lat">Latitudine:</label>
+    {{.Lat}}<br>
+
+    <label for="lng">Longitudine:</label>
+    {{.Lng}}<br>
+    
+    
+ 
+<br>
+<br><br><br>
+<a href="/browse">Browse Products</a>
+</center>
+</body>
+
+</body>
+</html>
+{{template "Footer"}}
