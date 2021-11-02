@@ -1,3 +1,4 @@
+{{template "Header"}}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,10 +13,18 @@
   width: 60%;
   /* The width is the width of the web page */
 }
+iframe {
+			width: 100%;
+			height: 500px;
+		}
     </style>
 </head>
 <body>
-    <div id="map"></div>
+    
+    <center><a href="/about">About</a> <a href="/logout">Logout</a> <a href="/addbridge">Add Bridge</a> <a href="/contact">Contact</a> <a href="/browse">Your Bridges</a> <a href="/browseMap">Map</a> 
+        <div id="map"></div></center>
+    <iframe src="" name="myFrame" style="border:none;" scrolling="yes"></iframe>
+    
     
     <script>
     var coords ="{{range .}}{{.Lat}} {{.Lng}} {{.ID}} {{end}}";
@@ -33,7 +42,7 @@
              {
                  markers.push({
                      coords:{lat:parseFloat(myArr_coords[i]),lng:parseFloat(myArr_coords[i+1])},
-                    content: '<a href=/show/?idbridge='+parseFloat(myArr_coords[i+2])+'>Edit</a>',
+                    content: '<a href=/show/?idbridge='+parseFloat(myArr_coords[i+2])+' target = myFrame>Show</a>',
                 },
                  );
              }
@@ -42,27 +51,38 @@
             {
                 addMarker(markers[i]);
             }
+            // Create the initial InfoWindow.
+  let infoWindow = new google.maps.InfoWindow({
+    content: "Click the map to get Lat/Lng!",
+    position: {lat:47.152050, lng:27.588990},
+  });
+
+  infoWindow.open(map);
+
+  // Configure the click listener.
+  map.addListener("click", (mapsMouseEvent) => {
+    // Close the current InfoWindow.
+    infoWindow.close();
+
+    // Create a new InfoWindow.
+    infoWindow = new google.maps.InfoWindow({
+      position: mapsMouseEvent.latLng,
+    });
+    infoWindow.setContent(
+      JSON.stringify(mapsMouseEvent.latLng.toJSON(), null, 2)
+    );
+    infoWindow.open(map);
+  });
             
-    //         for (var i=0; i<parseInt(myArr_coords.length); i+=2)
-    //         {
-    //     var marker = new google.maps.Marker({
-    //       position: {lat:parseFloat(myArr_coords[i]), lng:parseFloat(myArr_coords[i+1])},
-    //       map: map,
-    //       icon:'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'
-    //     });
-    //     var infoWindow=new google.maps.InfoWindow({
-    //         content :'<h2>pod facultate</h2>'
-    //     })
-    //     marker.addListener('click',function(){
-    //         infoWindow.open(map,marker);
-    //     });
-    // }
     function addMarker(props)
     {
         var marker = new google.maps.Marker({
           position: props.coords,
           map: map,
-          icon:'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'
+          icon:{
+              url:"https://cdn3.iconfinder.com/data/icons/vol-1-1/128/bridge-256.png",
+              scaledSize: new google.maps.Size(50,50)
+          }
         });
         if (props.content)
         {
@@ -84,3 +104,4 @@
     
 </body>
 </html>
+{{template "Footer"}}
